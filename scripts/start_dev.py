@@ -74,10 +74,10 @@ CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 DEV_PATTERNS = [
     re.compile(re.escape(str(VENV_PY)) + r'.*backend_server\.py\s*$', re.I),
     re.compile(r'backend_server\.py\s+8766\s*$', re.I),
-    re.compile(r'web_main\.py\s*$', re.I),
+    re.compile(r'web_main\.py', re.I),
     re.compile(re.escape(str(FRONTEND)) + r'.*vite.*?\.js', re.I),
 ]
-WINDOW_RE = re.compile(r'web_main\.py\s*$', re.I)
+WINDOW_RE = re.compile(r'web_main\.py', re.I)
 
 
 def log(msg: str) -> None:
@@ -245,8 +245,12 @@ def _log_tail(path: Path, lines: int = 25) -> str:
         return "(无日志)"
 
 
-def spawn(cmd: list[str], cwd: Path, log_file: Path | None = None) -> subprocess.Popen:
-    kwargs: dict = {"cwd": str(cwd), "creationflags": CREATE_NO_WINDOW}
+def spawn(cmd: list[str], cwd: Path, log_file: Path | None = None, is_gui: bool = False) -> subprocess.Popen:
+    si = subprocess.STARTUPINFO()
+    si.lpDesktop = r"WinSta0\Default"
+    kwargs: dict = {"cwd": str(cwd), "startupinfo": si}
+    if not is_gui and CREATE_NO_WINDOW:
+        kwargs["creationflags"] = CREATE_NO_WINDOW
     if log_file is not None:
         log_file.parent.mkdir(parents=True, exist_ok=True)
         f = open(log_file, "ab", buffering=0)  # noqa: SIM115
@@ -366,7 +370,7 @@ def main() -> int:
 
     # 3) 窗口
     log("启动桌面窗口（web_main.py）...")
-    window = spawn([str(VENV_PY), "web_main.py"], ROOT)
+    window = spawn([str(VENV_PY), "web_main.py"], ROOT, is_gui=True)
     state = read_state()
     state["window"] = window.pid
     write_state(state)
@@ -381,7 +385,7 @@ def main() -> int:
                 if uptime < 20 and restarts < 3:
                     restarts += 1
                     log(f"窗口异常退出（运行 {uptime:.0f}s），第 {restarts} 次自动重启 ...")
-                    window = spawn([str(VENV_PY), "web_main.py"], ROOT)
+                    window = spawn([str(VENV_PY), "web_main.py"], ROOT, is_gui=True)
                     state = read_state()
                     state["window"] = window.pid
                     write_state(state)

@@ -33,6 +33,7 @@ const props = defineProps({
   bgOffsetY: { type: Number, default: 0 },
   adjustTarget: { type: String, default: 'stage' },
   alignment: { type: String, default: 'center' },
+  enableInteraction: { type: Boolean, default: true },
   // 该皮肤 skel 的 Spine 版本（4.0/4.1），决定加载哪个运行时
   spineVersion: { type: String, default: '4.1' },
 })
@@ -177,6 +178,102 @@ function playAnimation(name) {
     if (!l.skeleton) continue
     const t = !name ? pickAnim(l.data) : (l.data.animations.some((a) => a.name === name) ? name : pickAnim(l.data))
     if (t) l.state.setAnimation(0, t, true)
+  }
+}
+
+// 角色点击互动状态机（首击 action -> 随机表情池 -> 播完重置为 action）
+const interactMachine = {
+  step: 'action', // 'action' | 'expressions'
+  playedExpressions: new Set(),
+  isBusy: false,
+}
+
+function getAvailableExpressions(l) {
+  if (!l || !l.data || !l.data.animations) return []
+  const allAnims = l.data.animations.map((a) => a.name)
+  const targetKeywords = [
+    'shy', 'happy', 'delight', 'sad', 'good', 'no', 'smile', 'angry', 'cry',
+    'surprise', 'surpris', 'shock', 'fear', 'confus', 'think', 'laugh', 'cheer', 'wink', 'proud', 'panic'
+  ]
+
+  return allAnims.filter((name) => {
+    const low = name.toLowerCase()
+    // 1. 严格排除 talk 系列（不单放张嘴动作）
+    if (low.includes('talk')) return false
+    // 2. 严格排除 bg_ / 背景系列（如 bg_idle 等）
+    if (low.includes('bg_') || low.startsWith('bg') || low.includes('b_bg') || low.includes('bk')) return false
+    // 3. 排除基础姿势与待机动作
+    if (low === 'idle' || low.startsWith('idle_') || low === 'action' || low === 'aim' || low === 'cover') return false
+    // 4. 排除局部面部器官微调轨（避免只抽动鼻子/眨眼/眼珠/眼睫毛的非全身局部轨）
+    if (low.includes('eye') || low.includes('lash') || low.includes('brow') || low.includes('lip') || low.includes('mouth') || low.includes('tear') || low.includes('blush') || low.includes('nose') || low.includes('ball') || low.includes('ddam') || low.includes('cheek') || low.includes('_acc')) return false
+    // 5. 匹配表情核心词
+    return targetKeywords.some((kw) => low === kw || low.startsWith(kw) || low.endsWith(kw))
+  })
+}
+
+function triggerInteraction() {
+  const l0 = layers.find((l) => l.skeleton && l.state)
+  if (!props.enableInteraction || !l0 || interactMachine.isBusy) return
+
+  const allAnimNames = l0.data.animations.map((a) => a.name)
+  const idleAnim = pickAnim(l0.data)
+  const actionAnim = allAnimNames.find((n) => n.toLowerCase() === 'action') || allAnimNames.find((n) => n.toLowerCase().includes('action'))
+  const expressions = getAvailableExpressions(l0)
+
+  let targetAnim = ''
+  let isAction = false
+
+  if (interactMachine.step === 'action' || expressions.length === 0) {
+    // 阶段1：初次点击播放 action 互动动作，播完平滑切回 idle
+    targetAnim = actionAnim || (expressions[0] || idleAnim)
+    isAction = true
+    interactMachine.step = 'expressions'
+    interactMachine.playedExpressions.clear()
+  } else {
+    // 阶段2：从剩余未播放表情池中随机抽选，持久循环播放直到下次点击
+    const remaining = expressions.filter((e) => !interactMachine.playedExpressions.has(e))
+    if (remaining.length > 0) {
+      const idx = Math.floor(Math.random() * remaining.length)
+      targetAnim = remaining[idx]
+      interactMachine.playedExpressions.add(targetAnim)
+
+      // 若所有表情已播完，重置状态下一轮重新从 action 开始
+      if (interactMachine.playedExpressions.size >= expressions.length) {
+        interactMachine.step = 'action'
+        interactMachine.playedExpressions.clear()
+      }
+    } else {
+      targetAnim = actionAnim || idleAnim
+      isAction = true
+      interactMachine.step = 'action'
+      interactMachine.playedExpressions.clear()
+    }
+  }
+
+  if (!targetAnim) return
+
+  interactMachine.isBusy = true
+  if (isAction) {
+    // action 动作为一次性播放，播放完毕后自动回切 idle 待机
+    for (const l of layers) {
+      if (!l.skeleton) continue
+      l.state.setAnimation(0, targetAnim, false)
+      l.state.addAnimation(0, idleAnim, true, 0)
+    }
+    const duration = (l0.data.animations.find((a) => a.name === targetAnim)?.duration || 2.0) * 1000
+    setTimeout(() => {
+      interactMachine.isBusy = false
+    }, Math.max(800, duration))
+  } else {
+    // 表情动作为持久播放（loop: true），一直保持直到下一次点击切换
+    for (const l of layers) {
+      if (!l.skeleton) continue
+      l.state.setAnimation(0, targetAnim, true)
+    }
+    // 300ms 快速解锁，允许随时点击切入下一个表情
+    setTimeout(() => {
+      interactMachine.isBusy = false
+    }, 300)
   }
 }
 
@@ -498,6 +595,24 @@ watch(
   (v) => v && playAnimation(v),
 )
 
+watch(
+  () => props.enableInteraction,
+  (v) => {
+    if (!v && layers.length) {
+      const l0 = layers.find((l) => l.skeleton && l.state)
+      if (l0) {
+        const idleAnim = pickAnim(l0.data)
+        for (const l of layers) {
+          if (l.skeleton) l.state.setAnimation(0, idleAnim, true)
+        }
+      }
+      interactMachine.step = 'action'
+      interactMachine.playedExpressions.clear()
+      interactMachine.isBusy = false
+    }
+  },
+)
+
 function onCanvasWheel(e) {
   e.preventDefault()
   const factor = Math.pow(1.1, -e.deltaY / 100)
@@ -506,8 +621,16 @@ function onCanvasWheel(e) {
     if (nextBg !== props.bgScale) emit('bgScaleChange', nextBg)
     return
   }
-  const next = Math.round(WL.clampScale(props.scale * factor))
-  emit('scaleChange', next)
+  if (props.adjustTarget === 'char') {
+    const next = Math.round(WL.clampScale(props.scale * factor))
+    emit('scaleChange', next)
+    return
+  }
+  // 画面模式：人物与背景锁定，整体等比同步缩放！
+  const nextChar = Math.round(WL.clampScale(props.scale * factor))
+  const nextBg = Math.max(30, Math.min(300, Math.round(props.bgScale * factor)))
+  emit('scaleChange', nextChar)
+  if (nextBg !== props.bgScale) emit('bgScaleChange', nextBg)
 }
 
 function onCanvasDown(e) {
@@ -525,14 +648,15 @@ function onCanvasDown(e) {
     canvasRef.value.style.cursor = 'move'
     return
   }
+  // 画面模式：记录起始 client 坐标与起始偏移量
   drag = {
     x: e.clientX,
     y: e.clientY,
-    ox: props.offsetX,
-    oy: props.offsetY,
-    camX: renderer.camera.position.x,
-    camY: renderer.camera.position.y,
-    zoom: renderer.camera.zoom,
+    target: 'stage',
+    charOx: props.charOffsetX,
+    charOy: props.charOffsetY,
+    bgOx: props.bgOffsetX,
+    bgOy: props.bgOffsetY,
   }
   canvasRef.value.style.cursor = 'grabbing'
 }
@@ -541,22 +665,35 @@ function onMove(e) {
   if (!drag) return
   drag.lastX = e.clientX
   drag.lastY = e.clientY
-  if (drag.target === 'char' || drag.target === 'bg') {
-    const canvas = canvasRef.value
-    const cw = canvas.clientWidth || 1
-    const ch = canvas.clientHeight || 1
-    const nx = WL.clampOffset(drag.ox + ((e.clientX - drag.x) / cw) * 100)
-    const ny = WL.clampOffset(drag.oy - ((e.clientY - drag.y) / ch) * 100)
-    if (drag.target === 'char') emit('charOffsetChange', { x: nx, y: ny })
-    else emit('bgOffsetChange', { x: nx, y: ny })
+  const canvas = canvasRef.value
+  const cw = canvas.clientWidth || 1
+  const ch = canvas.clientHeight || 1
+  const dxPct = ((e.clientX - drag.x) / cw) * 100
+  const dyPct = ((e.clientY - drag.y) / ch) * 100
+
+  if (drag.target === 'char') {
+    // 角色独立偏移：往右拖(+dx) -> 角色向右(+x)；往上拖(-dy) -> 角色向上(+y)
+    const nx = WL.clampOffset(drag.ox + dxPct)
+    const ny = WL.clampOffset(drag.oy - dyPct)
+    emit('charOffsetChange', { x: nx, y: ny })
     return
   }
-  const cam = renderer.camera
-  const dx = e.clientX - drag.x
-  const dy = e.clientY - drag.y
-  cam.position.x = drag.camX - dx * drag.zoom
-  cam.position.y = drag.camY + dy * drag.zoom
-  cam.position.z = 0
+  if (drag.target === 'bg') {
+    // 背景偏移：往右拖(+dx) -> 背景向右(+x)；往上拖(-dy) -> 背景向上(+y)
+    const nx = WL.clampOffset(drag.ox + dxPct)
+    const ny = WL.clampOffset(drag.oy - dyPct)
+    emit('bgOffsetChange', { x: nx, y: ny })
+    return
+  }
+  // 画面模式（人物与背景完全锁合绑定）：
+  // 拖动画面的物理意义是：人物和背景像印在同一块画板上，完全等速同向平移
+  // 直接以完全相同的屏幕百分比增量驱动人物 charOffset 和背景 bgOffset，绝对零相对位移
+  const charX = WL.clampOffset(drag.charOx + dxPct)
+  const charY = WL.clampOffset(drag.charOy - dyPct)
+  const bgX = WL.clampOffset(drag.bgOx + dxPct)
+  const bgY = WL.clampOffset(drag.bgOy - dyPct)
+  emit('charOffsetChange', { x: charX, y: charY })
+  emit('bgOffsetChange', { x: bgX, y: bgY })
 }
 
 function onUp() {
@@ -566,21 +703,44 @@ function onUp() {
   const ch = canvas.clientHeight || 1
   const lx = drag.lastX != null ? drag.lastX : drag.x
   const ly = drag.lastY != null ? drag.lastY : drag.y
-  if (drag.target === 'char' || drag.target === 'bg') {
-    const target = drag.target
-    const nx = Math.round(WL.clampOffset(drag.ox + ((lx - drag.x) / cw) * 100))
-    const ny = Math.round(WL.clampOffset(drag.oy - ((ly - drag.y) / ch) * 100))
+  const dist = Math.hypot(lx - drag.x, ly - drag.y)
+  const isClick = dist < 6
+  const target = drag.target
+
+  if (isClick) {
     drag = null
     canvas.style.cursor = 'grab'
-    if (target === 'char') emit('charOffsetChange', { x: nx, y: ny })
-    else emit('bgOffsetChange', { x: nx, y: ny })
+    triggerInteraction()
     return
   }
-  const ox = Math.round(WL.clampOffset(drag.ox + ((lx - drag.x) / cw) * 100))
-  const oy = Math.round(WL.clampOffset(drag.oy - ((ly - drag.y) / ch) * 100))
+
+  const dxPct = ((lx - drag.x) / cw) * 100
+  const dyPct = ((ly - drag.y) / ch) * 100
+
+  if (target === 'char') {
+    const nx = Math.round(WL.clampOffset(drag.ox + dxPct))
+    const ny = Math.round(WL.clampOffset(drag.oy - dyPct))
+    drag = null
+    canvas.style.cursor = 'grab'
+    emit('charOffsetChange', { x: nx, y: ny })
+    return
+  }
+  if (target === 'bg') {
+    const nx = Math.round(WL.clampOffset(drag.ox + dxPct))
+    const ny = Math.round(WL.clampOffset(drag.oy - dyPct))
+    drag = null
+    canvas.style.cursor = 'grab'
+    emit('bgOffsetChange', { x: nx, y: ny })
+    return
+  }
+  const charX = Math.round(WL.clampOffset(drag.charOx + dxPct))
+  const charY = Math.round(WL.clampOffset(drag.charOy - dyPct))
+  const bgX = Math.round(WL.clampOffset(drag.bgOx + dxPct))
+  const bgY = Math.round(WL.clampOffset(drag.bgOy - dyPct))
   drag = null
   canvas.style.cursor = 'grab'
-  emit('panChange', { x: ox, y: oy })
+  emit('charOffsetChange', { x: charX, y: charY })
+  emit('bgOffsetChange', { x: bgX, y: bgY })
 }
 
 onMounted(async () => {

@@ -68,8 +68,25 @@ def bg_css(bg: str) -> str:
     return BG_STYLES.get(bg, BG_STYLES["monet"])
 
 
-def bg_css_for_skin(skin: dict, root, bg: str, bg_color: str | None = None) -> str:
+def bg_css_for_skin(
+    skin: dict,
+    root,
+    bg: str,
+    bg_color: str | None = None,
+    bg_image: str | None = None,
+    bg_scale: int = 100,
+    bg_offset_x: int = 0,
+    bg_offset_y: int = 0,
+) -> str:
     """预览与导出共用的背景 CSS：所有模式都优先按皮肤素材取色生成，取色失败才用固定样式。"""
+    if bg == "image" and bg_image:
+        scale_pct = (bg_scale or 100)
+        pos_x = f"calc(50% + {bg_offset_x or 0}vw)"
+        pos_y = f"calc(50% + {- (bg_offset_y or 0)}vh)"
+        return (
+            f"background-image: url('{bg_image}'); "
+            f"background-size: {scale_pct}% auto; background-position: {pos_x} {pos_y}; background-repeat: no-repeat;"
+        )
     src = find_palette_source(skin, root)
     palette = extract_palette(src) if src else None
     if palette:
@@ -77,6 +94,19 @@ def bg_css_for_skin(skin: dict, root, bg: str, bg_color: str | None = None) -> s
     if bg == "solid" and bg_color:
         return f"background: {bg_color};"
     return bg_css(bg)
+
+
+def wallpaper_title(ship: str, name: str) -> str:
+    """生成 Wallpaper Engine 壁纸标题：统一命名为 'Nikke - 角色名字'。"""
+    ship = (ship or "").strip()
+    name = (name or "").strip()
+    if not name or ship == name:
+        char_name = ship
+    elif name.startswith(ship):
+        char_name = name
+    else:
+        char_name = f"{ship} {name}"
+    return f"Nikke - {char_name}".strip(" -")
 
 
 def project_dir_name(ship: str, name: str) -> str:
@@ -87,9 +117,17 @@ def project_dir_name(ship: str, name: str) -> str:
     首次推送即导出值，所见即所得。Windows 不允许目录名以空格/点结尾，也禁止
     <>:"/\\|?* 等字符。
     """
-    raw = f"{ship}_{name}"
+    ship = (ship or "").strip()
+    name = (name or "").strip()
+    if not name or ship == name:
+        char_name = ship
+    elif name.startswith(ship):
+        char_name = name
+    else:
+        char_name = f"{ship}_{name}"
+    raw = f"Nikke_{char_name}"
     cleaned = "".join(ch for ch in raw if ch not in '<>:"/\\|?*').rstrip(" .")
-    return f"{cleaned or 'wallpaper'}_{uuid.uuid4().hex[:8]}"
+    return f"{cleaned or 'Nikke_wallpaper'}_{uuid.uuid4().hex[:8]}"
 
 
 def _clamp(v: float, lo: float, hi: float) -> float:
@@ -105,6 +143,7 @@ def project_json(
     char_offset_x: int | None = None,
     char_offset_y: int | None = None,
     alignment: int = 0,
+    interaction: bool = True,
 ) -> dict:
     # 语义与预览一致：scale 为百分比（100 = 自适应），偏移为画布宽/高百分比
     scale_ctl = int(_clamp(scale, 20, 300))
@@ -130,6 +169,14 @@ def project_json(
         "scalectrl": slider("缩放", scale_ctl, 20, 300, 103, 3),
         "offsetx": slider("水平偏移", ox, -100, 100, 101, 1),
         "offsety": slider("垂直偏移", oy, -100, 100, 102, 2),
+        "interaction": {
+            "text": "点击互动",
+            "type": "bool",
+            "value": bool(interaction),
+            "editable": True,
+            "index": 4,
+            "order": 105,
+        },
         "alignment": {
             "text": "对齐方式", "type": "combo",
             # WE combo 标准格式：value 是选中项的字符串值，options 是 {label,value} 对象数组。
@@ -178,6 +225,7 @@ def export_defaults(options: dict) -> dict:
     align = options.get("alignment", 0)
     align_name = ALIGN_NAMES[align] if isinstance(align, int) and 0 <= align < len(ALIGN_NAMES) else str(align or "center")
     anim = options.get("animation") or ""
+    interaction = bool(options.get("interaction", True))
     return {
         "SCALE": str(scale),
         "OFFSET_X": str(ox),
@@ -188,6 +236,7 @@ def export_defaults(options: dict) -> dict:
         "BG_OFFSET_Y": str(boy),
         "ALIGNMENT": align_name,
         "ANIMATION": json.dumps(str(anim), ensure_ascii=False),
+        "ENABLE_INTERACTION": "true" if interaction else "false",
     }
 
 

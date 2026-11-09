@@ -100,7 +100,8 @@ def ensure_runtime_dirs() -> None:
     ls = RESOURCES / "metadata" / "local_skins.json"
     if not ls.exists():
         ls.write_text("[]", encoding="utf-8")
-    for sub in ("bundles", "extracted", "wallpapers", "exports"):
+    for sub in ("bundles", "extracted", "wallpapers", "exports", "background",
+                "custom", "output", "input", "preview"):
         (RESOURCES / sub).mkdir(parents=True, exist_ok=True)
 
 

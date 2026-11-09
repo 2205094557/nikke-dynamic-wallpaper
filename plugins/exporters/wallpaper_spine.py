@@ -12,6 +12,7 @@ import re
 import shutil
 from pathlib import Path
 
+from core.backgrounds import resolve_background_file
 from core.registry import ExporterPlugin
 from core.wallpaper import (
     WALLPAPER_LAYOUT,
@@ -21,6 +22,7 @@ from core.wallpaper import (
     project_json,
     render_template,
     spine_runtime,
+    wallpaper_title,
 )
 
 
@@ -69,13 +71,30 @@ class WallpaperSpineExporter(ExporterPlugin):
             "textures": textures,
         }]
 
+        # 背景图导出：官方(background) / 扩图导入(custom) / 临时超分(preview) 三处统一解析
+        bg_image_opt = options.get("bgImage")
+        bg_img_css_ref = None
+        if options.get("bg") == "image" and bg_image_opt:
+            bg_file = resolve_background_file(options["root"], bg_image_opt)
+            if bg_file is not None:
+                shutil.copy2(bg_file, assets / bg_file.name)
+                bg_img_css_ref = f"assets/{bg_file.name}"
+
+        title = wallpaper_title(skin["ship"], skin["name"])
         html = render_template(
             "wallpaper_spine.html",
             LAYERS_JSON=json.dumps(layers, ensure_ascii=False),
             SPINE_RUNTIME=runtime_name,
-            TITLE=f"{skin['ship']} · {skin['name']}",
+            TITLE=title,
             BG_CSS=bg_css_for_skin(
-                skin, options.get("root"), options.get("bg", "monet"), options.get("bgColor")
+                skin,
+                options.get("root"),
+                options.get("bg", "monet"),
+                options.get("bgColor"),
+                bg_image=bg_img_css_ref,
+                bg_scale=options.get("bgScale", 100),
+                bg_offset_x=options.get("bgOffsetX", 0),
+                bg_offset_y=options.get("bgOffsetY", 0),
             ),
             **export_defaults(options),
         )
@@ -83,11 +102,12 @@ class WallpaperSpineExporter(ExporterPlugin):
         (proj / "project.json").write_text(
             json.dumps(
                 project_json(
-                    f"{skin['ship']} · {skin['name']}",
+                    title,
                     scale=options.get("scale", 100),
                     offset_x=options.get("offsetX", 0),
                     offset_y=options.get("offsetY", 0),
                     alignment=int(options.get("alignment", 0) or 0),
+                    interaction=bool(options.get("interaction", True)),
                 ),
                 ensure_ascii=False,
                 indent=2,

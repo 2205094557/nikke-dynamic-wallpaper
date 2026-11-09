@@ -18,14 +18,21 @@ const API_ACTIONS = {
   cleanExports: { path: '/api/library/clean-exports', method: 'POST' },
   openDownloadDir: { path: '/api/open/download-dir', method: 'POST' },
   openExtractedDir: { path: '/api/open/extracted-dir', method: 'POST' },
+  openBackgroundDir: { path: '/api/open/background-dir', method: 'POST' },
   openWallpapersDir: { path: '/api/open/wallpapers-dir', method: 'POST' },
   listDownloaded: { path: '/api/library/downloaded', method: 'GET' },
   updateMetadata: { path: '/api/metadata/update', method: 'POST' },
   exportWallpaper: { path: '/api/export', method: 'POST' },
-  exportImage: { path: '/api/export-image', method: 'POST' },
-  exportImageData: { path: '/api/export-image-data', method: 'POST' },
   applyWallpaper: { path: '/api/apply', method: 'POST' },
   getPalette: { path: '/api/palette', method: 'POST' },
+  getBackgrounds: { path: '/api/backgrounds', method: 'GET' },
+  upscaleBackground: { path: '/api/backgrounds/upscale', method: 'POST' },
+  exportBgForOutpaint: { path: '/api/backgrounds/export-outpaint', method: 'POST' },
+  importOutpaintResults: { path: '/api/backgrounds/import-outpaint', method: 'POST' },
+  deleteCustomBg: { path: '/api/backgrounds/delete-custom', method: 'POST' },
+  openOutputDir: { path: '/api/open/output-dir', method: 'POST' },
+  openInputDir: { path: '/api/open/input-dir', method: 'POST' },
+  openCustomBgDir: { path: '/api/open/custom-dir', method: 'POST' },
   getConfig: { path: '/api/config', method: 'GET' },
   setConfig: { path: '/api/config', method: 'POST' },
 }
@@ -37,7 +44,7 @@ const PY_API_NAMES = {
 }
 
 function bodyFor(name, args) {
-  if (name === 'downloadSkin' || name === 'deleteSkin' || name === 'exportImage') {
+  if (name === 'downloadSkin' || name === 'deleteSkin') {
     const [ship, bundle, skinName, downloadId] = args
     return { ship: ship || '', bundle: bundle || '', name: skinName || '', download_id: downloadId || '' }
   }
@@ -59,18 +66,30 @@ function bodyFor(name, args) {
     const [id] = args
     return { download_id: id || '' }
   }
-  if (name === 'exportImageData') {
-    const [ship, bundle, skinName, dataUrl, index] = args
-    return { ship: ship || '', bundle: bundle || '', name: skinName || '', dataUrl: dataUrl || '', index: index || null }
+  // 批量删除：args[0] = [{ship,bundle,name}, ...]
+  if (name === 'deleteSkinsBatch') {
+    const [items] = args
+    return { items: items || [] }
   }
   if (name === 'setConfig') {
     const [cfg] = args
     return { config: cfg || {} }
   }
-  // 批量删除：args[0] = [{ship,bundle,name}, ...]
-  if (name === 'deleteSkinsBatch') {
-    const [items] = args
-    return { items: items || [] }
+  if (name === 'upscaleBackground') {
+    const [params] = args
+    return {
+      filename: (params && params.filename) || '',
+      scale: (params && params.scale) || 2,
+      algorithm: (params && params.algorithm) || 'waifu2x',
+      denoise: (params && params.denoise) !== undefined ? params.denoise : 0,
+      tta: Boolean(params && params.tta),
+      downsample: Boolean(params && params.downsample),
+    }
+  }
+  // 扩图工作流：导出当前背景到 output 目录 / 删除自定义背景，都只需文件名
+  if (name === 'exportBgForOutpaint' || name === 'deleteCustomBg') {
+    const [filename] = args
+    return { filename: filename || '' }
   }
   return {}
 }
@@ -79,6 +98,14 @@ async function callBackend(name, args) {
   const cfg = API_ACTIONS[name]
   const opts = { method: cfg.method, headers: { 'Content-Type': 'application/json' } }
   let url = `${API_BASE}${cfg.path}`
+  if (cfg.method === 'GET' && args && args[0]) {
+    const params = new URLSearchParams()
+    for (const [k, v] of Object.entries(args[0])) {
+      if (v !== undefined && v !== null && v !== '') params.append(k, String(v))
+    }
+    const qs = params.toString()
+    if (qs) url += `?${qs}`
+  }
   if (cfg.method === 'POST') {
     opts.body = JSON.stringify(bodyFor(name, args))
   }
@@ -129,8 +156,9 @@ async function call(name, ...args) {
       return result
     } catch (e) {
       // HTTP 状态错误（接口 500/404 等）与连接失败（服务未启动）区分开
+      console.error(`[bridge] callBackend ${name} failed:`, e)
       const isHttp = e.message && e.message.startsWith('HTTP ')
-      return { ok: false, error: isHttp ? `后端接口错误：${e.message}` : `后端服务未启动（${API_BASE}）：${e.message}` }
+      return { ok: false, error: isHttp ? `后端接口错误：${e.message}` : `网络或后端请求失败（${API_BASE}）：${e.message}` }
     }
   }
   return mod[name](...args)
@@ -141,12 +169,18 @@ export const bridge = {
   listShips: () => call('listShips'),
   getShip: (id) => call('getShip', id),
   exportWallpaper: (ship, bundle, name, options) => call('exportWallpaper', ship, bundle, name, options),
-  exportImage: (ship, bundle, name) => call('exportImage', ship, bundle, name),
   applyWallpaper: (ship, bundle, name, options) => call('applyWallpaper', ship, bundle, name, options),
   getPalette: (ship, bundle, name, opts) => call('getPalette', ship, bundle, name, opts),
+  getBackgrounds: (params) => call('getBackgrounds', params),
+  upscaleBackground: (params) => call('upscaleBackground', params),
+  exportBgForOutpaint: (filename) => call('exportBgForOutpaint', filename),
+  importOutpaintResults: () => call('importOutpaintResults'),
+  deleteCustomBg: (filename) => call('deleteCustomBg', filename),
+  openOutputDir: () => call('openOutputDir'),
+  openInputDir: () => call('openInputDir'),
+  openCustomBgDir: () => call('openCustomBgDir'),
   downloadSkin: (ship, bundle, name, downloadId) => call('downloadSkin', ship, bundle, name, downloadId),
   cancelDownload: (id) => call('cancelDownload', id),
-  exportImageData: (ship, bundle, name, dataUrl, index) => call('exportImageData', ship, bundle, name, dataUrl, index),
   listDownloaded: () => call('listDownloaded'),
   deleteSkin: (ship, bundle, name) => call('deleteSkin', ship, bundle, name),
   deleteSkinsBatch: (items) => call('deleteSkinsBatch', items),
@@ -154,6 +188,7 @@ export const bridge = {
   cleanExports: () => call('cleanExports'),
   openDownloadDir: () => call('openDownloadDir'),
   openExtractedDir: () => call('openExtractedDir'),
+  openBackgroundDir: () => call('openBackgroundDir'),
   openWallpapersDir: () => call('openWallpapersDir'),
   updateMetadata: () => call('updateMetadata'),
   getConfig: () => call('getConfig'),

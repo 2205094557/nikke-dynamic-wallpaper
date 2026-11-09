@@ -69,6 +69,38 @@ def fetch_l2d_folders() -> list[str]:
     return ids or None
 
 
+# 官方中文译名补全字典
+NIKKE_CN_TRANSLATION = {
+    "c104": "德雷克",
+    "c250": "量产型 · 红色",
+    "c251": "量产型 · 蓝色",
+    "c252": "量产型 · 橙色",
+    "c253": "量产型 · 绿色",
+    "c254": "量产型 · 紫色",
+    "c255": "量产型 · 白色",
+    "c263": "茵迪维利亚",
+    "c350_old": "马斯特 (原型)",
+    "c472": "红莲：暗影",
+    "c473": "长发公主：纯洁修女",
+    "c482": "罗吉 (#000000)",
+    "c803": "电次",
+    "c804": "早川秋",
+    "c853": "亚当",
+}
+
+
+def is_real_nikke(ship_id: str) -> bool:
+    """严格判定是否为正统可玩/抽取的妮姬与联动角色（过滤掉所有 NPC、Boss、过场等）。"""
+    s = str(ship_id).strip().lower()
+    if not s.startswith("c"):
+        return False
+    if s.startswith("c9"):
+        return False
+    if any(s.startswith(k) for k in ["cherry", "claymore", "colorless", "coins"]):
+        return False
+    return True
+
+
 def display(entry: dict, *keys: str) -> str:
     for k in keys:
         v = (entry or {}).get(k)
@@ -143,9 +175,9 @@ def main() -> int:
     if folders:
         for fid in folders:
             by_id.setdefault(fid, {"id": fid, "name": fid})
-    entries = list(by_id.values())
-    known = set(by_id)
-    print(f"条目合计: {len(entries)}（清单 {len(l2d)} + 目录补充 {len(entries) - len(l2d)}）", flush=True)
+    entries = [e for e in by_id.values() if is_real_nikke(str(e.get("id")))]
+    known = set(str(e.get("id")) for e in entries)
+    print(f"有效妮姬条目: {len(entries)}（已过滤非角色与NPC）", flush=True)
 
     # 4) 归并出基础角色
     ships: list[dict] = []
@@ -155,7 +187,7 @@ def main() -> int:
         base = base_id_of(str(e.get("id")), known)
         base_of_entry[str(e.get("id"))] = base
         if base not in ships_by_name:
-            nm = display(e, "cn", "tw", "ko", "jp", "name") or str(e.get("id"))
+            nm = NIKKE_CN_TRANSLATION.get(base) or display(e, "cn", "tw", "ko", "jp", "name") or str(e.get("id"))
             ships_by_name[base] = {
                 "id": base,
                 "name": nm,
@@ -166,7 +198,7 @@ def main() -> int:
             ships.append(ships_by_name[base])
         # 基础角色条目自身的显示名优先
         if str(e.get("id")) == base:
-            nm = display(e, "cn", "tw", "ko", "jp", "name") or str(e.get("id"))
+            nm = NIKKE_CN_TRANSLATION.get(base) or display(e, "cn", "tw", "ko", "jp", "name") or str(e.get("id"))
             ships_by_name[base]["name"] = nm
             ships_by_name[base]["en"] = display(e, "name") or nm
         ships_by_name[base]["costumes"].append(str(e.get("id")))
@@ -193,7 +225,7 @@ def main() -> int:
         eid = str(e.get("id"))
         base = base_of_entry[eid]
         ship = ships_by_name[base]
-        nm = display(e, "cn", "tw", "ko", "jp", "name") or eid
+        nm = NIKKE_CN_TRANSLATION.get(eid) or display(e, "cn", "tw", "ko", "jp", "name") or eid
         skin = {
             "ship": ship["name"],
             "name": nm,

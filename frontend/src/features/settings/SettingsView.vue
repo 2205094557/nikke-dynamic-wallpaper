@@ -21,9 +21,16 @@
     </div>
 
     <div class="settings-grid">
-      <n-card title="下载目录" size="small" class="wc-card">
-        <p class="dim">角色 Spine 资源保存在软件资源目录（下载即就绪，无需解包）。</p>
+      <n-card title="资源目录" size="small" class="wc-card">
+        <p class="dim">
+          角色 Spine 资源与官方场景背景保存在软件资源目录中；自定义 / 扩图背景在
+          「自定义库」。扩图流程：导出到 output → 外部工具扩图 → 成品放进 input → 导入。
+        </p>
         <div class="row">
+          <n-button size="small" type="primary" secondary @click="openDir('output')">📁 打开 output（导出）</n-button>
+          <n-button size="small" type="primary" secondary @click="openDir('input')">📁 打开 input（放扩图成品）</n-button>
+          <n-button size="small" secondary @click="openDir('custom')">📁 打开自定义库</n-button>
+          <n-button size="small" secondary @click="openDir('background')">📁 打开官方背景目录</n-button>
           <n-button size="small" secondary @click="openDir('download')">打开下载目录</n-button>
           <n-button size="small" secondary @click="openDir('extracted')">打开提取目录</n-button>
         </div>
@@ -40,7 +47,7 @@
                 清理导出目录
               </n-button>
             </template>
-            将删除 resources/wallpapers 与 resources/exports 下所有导出的壁纸项目与截图，确定吗？
+            将删除 resources/wallpapers 下已导出的壁纸项目（以及历史截图目录 resources/exports），确定吗？
           </n-popconfirm>
           <span class="dim">清理后需重新导出壁纸</span>
         </div>
@@ -200,7 +207,7 @@
           <ul class="about-list">
             <li>全角色 Spine 大厅动画按需下载（main / aim / cover 三姿势）</li>
             <li>图鉴式预览（取色 / 莫奈 / 毛玻璃 / 星空等背景）</li>
-            <li>动态壁纸导出（Spine 动画循环）+ 静态壁纸导出（预览截图）</li>
+            <li>动态壁纸导出（Spine 动画循环）</li>
             <li>导出 Wallpaper Engine 壁纸项目（project.json 原生属性 + 一键应用）</li>
           </ul>
           <div class="about-sec">技术栈</div>
@@ -366,7 +373,13 @@ async function refresh() {
 }
 
 async function openDir(kind) {
-  const res = kind === 'download' ? await bridge.openDownloadDir() : await bridge.openExtractedDir()
+  let res
+  if (kind === 'output') res = await bridge.openOutputDir()
+  else if (kind === 'input') res = await bridge.openInputDir()
+  else if (kind === 'custom') res = await bridge.openCustomBgDir()
+  else if (kind === 'background') res = await bridge.openBackgroundDir()
+  else if (kind === 'download') res = await bridge.openDownloadDir()
+  else res = await bridge.openExtractedDir()
   if (res && res.ok) message.success('已打开目录')
   else message.error((res && res.error) || '打开目录失败')
 }

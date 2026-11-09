@@ -1,0 +1,2622 @@
+{
+ "ships": {
+  "拉毗": {
+   "p": "lapirapi",
+   "i": "lr"
+  },
+  "尼恩": {
+   "p": "nienneon",
+   "i": "nn"
+  },
+  "阿妮斯": {
+   "p": "anisianis",
+   "i": "aa"
+  },
+  "玛丽安": {
+   "p": "malianmarian",
+   "i": "mm"
+  },
+  "尼恩：蓝色海洋": {
+   "p": "nien：lansehaiyangneonblueocean",
+   "i": "nn"
+  },
+  "阿妮斯：闪耀夏日": {
+   "p": "anisi：shanyaoxiarianissparklingsummer",
+   "i": "aa"
+  },
+  "拉毗：小红帽": {
+   "p": "lapi：xiaohongmaorapiredhood",
+   "i": "lr"
+  },
+  "阿妮斯：超级巨星": {
+   "p": "anisi：chaojijuxinganisstar",
+   "i": "aa"
+  },
+  "尼恩：透视之眼": {
+   "p": "nien：toushizhiyanneonvisioneye",
+   "i": "nn"
+  },
+  "德尔塔": {
+   "p": "deertadelta",
+   "i": "dd"
+  },
+  "西格娜": {
+   "p": "xigenasignal",
+   "i": "xs"
+  },
+  "德尔塔：怪盗忍者": {
+   "p": "deerta：guaidaorenzhedeltaninjathief",
+   "i": "dd"
+  },
+  "波莉": {
+   "p": "bolipoli",
+   "i": "bp"
+  },
+  "米兰达": {
+   "p": "milandamiranda",
+   "i": "mm"
+  },
+  "基里": {
+   "p": "jiliquiry",
+   "i": "jq"
+  },
+  "D": {
+   "p": "dd",
+   "i": "dd"
+  },
+  "K": {
+   "p": "kk",
+   "i": "kk"
+  },
+  "D：杀手妻子": {
+   "p": "d：shashouqizidkillerwife",
+   "i": "dd"
+  },
+  "贝洛塔": {
+   "p": "beiluotabelorta",
+   "i": "bb"
+  },
+  "米卡": {
+   "p": "mikamica",
+   "i": "mm"
+  },
+  "米卡：雪地伙伴": {
+   "p": "mika：xuedihuobanmicasnowbuddy",
+   "i": "mm"
+  },
+  "布丽德": {
+   "p": "bulidebrid",
+   "i": "bb"
+  },
+  "索林": {
+   "p": "suolinsoline",
+   "i": "ss"
+  },
+  "迪塞尔": {
+   "p": "disaierdiesel",
+   "i": "dd"
+  },
+  "布丽德：静默轨道": {
+   "p": "bulide：jingmoguidaobridsilenttrack",
+   "i": "bb"
+  },
+  "索林：霜之旅票": {
+   "p": "suolin：shuangzhilvpiaosolinefrostticket",
+   "i": "ss"
+  },
+  "迪塞尔：冬日甜心": {
+   "p": "disaier：dongritianxindieselwintersweets",
+   "i": "dd"
+  },
+  "桑迪": {
+   "p": "sangdicenti",
+   "i": "sc"
+  },
+  "丽塔": {
+   "p": "litaliter",
+   "i": "ll"
+  },
+  "艾玛": {
+   "p": "aimaemma",
+   "i": "ae"
+  },
+  "贝斯蒂": {
+   "p": "beisidivesti",
+   "i": "bv"
+  },
+  "银华": {
+   "p": "yinhuaeunhwa",
+   "i": "ye"
+  },
+  "艾玛：战术升级": {
+   "p": "aima：zhanshushengjiemmatacticalupgrade",
+   "i": "ae"
+  },
+  "贝斯蒂：战术升级": {
+   "p": "beisidi：zhanshushengjivestitacticalupgrade",
+   "i": "bv"
+  },
+  "银华：战术升级": {
+   "p": "yinhua：zhanshushengjieunhwatacticalupgrade",
+   "i": "ye"
+  },
+  "拉普拉斯": {
+   "p": "lapulasilaplace",
+   "i": "ll"
+  },
+  "德雷克": {
+   "p": "deleikedrake",
+   "i": "dd"
+  },
+  "麦斯威尔": {
+   "p": "maisiweiermaxwell",
+   "i": "mm"
+  },
+  "拉普拉斯：究极英雄": {
+   "p": "lapulasi：jiujiyingxionglaplaceultimatehero",
+   "i": "ll"
+  },
+  "麦斯威尔：平凡技师": {
+   "p": "maisiweier：pingfanjishimaxwellordinarymechanic",
+   "i": "mm"
+  },
+  "克拉乌": {
+   "p": "kelawucrow",
+   "i": "kc"
+  },
+  "豺狼": {
+   "p": "chailangjackal",
+   "i": "cj"
+  },
+  "毒蛇": {
+   "p": "dusheviper",
+   "i": "dv"
+  },
+  "E.H.": {
+   "p": "eheh",
+   "i": "ee"
+  },
+  "N102": {
+   "p": "n102n102",
+   "i": "nn"
+  },
+  "安妮：奇迹仙女": {
+   "p": "anni：qijixiannvannemiraclefairy",
+   "i": "aa"
+  },
+  "梅里": {
+   "p": "meilimary",
+   "i": "mm"
+  },
+  "佩珀": {
+   "p": "peipopepper",
+   "i": "pp"
+  },
+  "梅里：海湾女神": {
+   "p": "meili：haiwannvshenmarybaygoddess",
+   "i": "mm"
+  },
+  "舒格": {
+   "p": "shugesugar",
+   "i": "ss"
+  },
+  "米尔克": {
+   "p": "mierkemilk",
+   "i": "mm"
+  },
+  "普琳玛": {
+   "p": "pulinmafrima",
+   "i": "pf"
+  },
+  "米尔克：花漾兔女郎": {
+   "p": "mierke：huayangtunvlangmilkbloomingbunny",
+   "i": "mm"
+  },
+  "尤莉亚": {
+   "p": "youliyajulia",
+   "i": "yj"
+  },
+  "尤妮": {
+   "p": "youniyuni",
+   "i": "yy"
+  },
+  "米哈拉": {
+   "p": "mihalamihara",
+   "i": "mm"
+  },
+  "米哈拉：羁绊锁链": {
+   "p": "mihala：jibansuolianmiharabondingchain",
+   "i": "mm"
+  },
+  "普丽瓦蒂": {
+   "p": "puliwadiprivaty",
+   "i": "pp"
+  },
+  "尤尔夏": {
+   "p": "youerxiayulha",
+   "i": "yy"
+  },
+  "艾德米": {
+   "p": "aidemiadmi",
+   "i": "aa"
+  },
+  "吉萝婷": {
+   "p": "jiluotingguillotine",
+   "i": "jg"
+  },
+  "梅登": {
+   "p": "meidengmaiden",
+   "i": "mm"
+  },
+  "吉萝婷：寒冬杀手": {
+   "p": "jiluoting：handongshashouguillotinewinterslayer",
+   "i": "jg"
+  },
+  "梅登：冰玫瑰": {
+   "p": "meideng：bingmeiguimaidenicerose",
+   "i": "mm"
+  },
+  "鲁德米拉": {
+   "p": "ludemilaludmilla",
+   "i": "ll"
+  },
+  "爱丽丝": {
+   "p": "ailisialice",
+   "i": "aa"
+  },
+  "托比": {
+   "p": "tuobitove",
+   "i": "tt"
+  },
+  "尼夫": {
+   "p": "nifuneve",
+   "i": "nn"
+  },
+  "鲁德米拉：冬日之主": {
+   "p": "ludemila：dongrizhizhuludmillawinterowner",
+   "i": "ll"
+  },
+  "爱丽丝：仙境兔女郎": {
+   "p": "ailisi：xianjingtunvlangalicewonderlandbunny",
+   "i": "aa"
+  },
+  "露菲": {
+   "p": "lufeirupee",
+   "i": "lr"
+  },
+  "杨": {
+   "p": "yangyan",
+   "i": "yy"
+  },
+  "朵拉": {
+   "p": "duoladolla",
+   "i": "dd"
+  },
+  "露菲：冬日购物狂": {
+   "p": "lufei：dongrigouwukuangrupeewintershopper",
+   "i": "lr"
+  },
+  "艾可希雅": {
+   "p": "aikexiyaexia",
+   "i": "ae"
+  },
+  "诺薇儿": {
+   "p": "nuoweiernovel",
+   "i": "nn"
+  },
+  "白雪公主": {
+   "p": "baixuegongzhusnowwhite",
+   "i": "bs"
+  },
+  "长发公主": {
+   "p": "changfagongzhurapunzel",
+   "i": "cr"
+  },
+  "红莲": {
+   "p": "honglianscarlet",
+   "i": "hs"
+  },
+  "娜由塔": {
+   "p": "nayoutanayuta",
+   "i": "nn"
+  },
+  "白雪公主：纯真年代": {
+   "p": "baixuegongzhu：chunzhenniandaisnowwhiteinnocentdays",
+   "i": "bs"
+  },
+  "红莲：暗影": {
+   "p": "honglian：anyingscarlet",
+   "i": "hs"
+  },
+  "长发公主：纯洁恩典": {
+   "p": "changfagongzhu：chunjieendianrapunzelpuregrace",
+   "i": "cr"
+  },
+  "匹诺曹": {
+   "p": "pinuocaopinocchio",
+   "i": "pp"
+  },
+  "哈兰": {
+   "p": "halanharran",
+   "i": "hh"
+  },
+  "伊莎贝尔": {
+   "p": "yishabeierisabel",
+   "i": "yi"
+  },
+  "诺雅": {
+   "p": "nuoyanoah",
+   "i": "nn"
+  },
+  "桃乐丝": {
+   "p": "taolesidorothy",
+   "i": "td"
+  },
+  "桃乐丝：机缘巧遇": {
+   "p": "taolesi：jiyuanqiaoyudorothyserendipity",
+   "i": "td"
+  },
+  "鲁玛妮": {
+   "p": "lumanirumani",
+   "i": "lr"
+  },
+  "艾菲涅尔": {
+   "p": "aifeinieerepinel",
+   "i": "ae"
+  },
+  "富克旺": {
+   "p": "fukewangfolkwang",
+   "i": "ff"
+  },
+  "量产型 · 红色": {
+   "p": "liangchanxing massproducedred",
+   "i": "lm"
+  },
+  "量产型 · 蓝色": {
+   "p": "liangchanxing massproducedblue",
+   "i": "lm"
+  },
+  "量产型 · 橙色": {
+   "p": "liangchanxing massproducedorange",
+   "i": "lm"
+  },
+  "量产型 · 绿色": {
+   "p": "liangchanxing massproducedgreen",
+   "i": "lm"
+  },
+  "量产型 · 紫色": {
+   "p": "liangchanxing massproducedpurple",
+   "i": "lm"
+  },
+  "量产型 · 白色": {
+   "p": "liangchanxing massproducedwhite",
+   "i": "lm"
+  },
+  "神罚": {
+   "p": "shenfamodernia",
+   "i": "sm"
+  },
+  "尼希利斯塔": {
+   "p": "nixilisitanihilister",
+   "i": "nn"
+  },
+  "莉贝雷利奥": {
+   "p": "libeileiliaoliberalio",
+   "i": "ll"
+  },
+  "茵迪维利亚": {
+   "p": "yindiweiliyaindivilia",
+   "i": "yi"
+  },
+  "布兰儿": {
+   "p": "bulanerblanc",
+   "i": "bb"
+  },
+  "诺亚尔": {
+   "p": "nuoyaernoir",
+   "i": "nn"
+  },
+  "露姬": {
+   "p": "lujirouge",
+   "i": "lr"
+  },
+  "罗珊娜": {
+   "p": "luoshannarosanna",
+   "i": "lr"
+  },
+  "牡丹": {
+   "p": "mudanmoran",
+   "i": "mm"
+  },
+  "樱花": {
+   "p": "yinghuasakura",
+   "i": "ys"
+  },
+  "罗珊娜：高雅海洋": {
+   "p": "luoshanna：gaoyahaiyangrosannachicocean",
+   "i": "lr"
+  },
+  "樱花：夏日绽放": {
+   "p": "yinghua：xiarizhanfangsakurabloominsummer",
+   "i": "ys"
+  },
+  "玛娜": {
+   "p": "manamana",
+   "i": "mm"
+  },
+  "艾瑟儿": {
+   "p": "aiseerether",
+   "i": "ae"
+  },
+  "士兵E.G.": {
+   "p": "shibinge.g.soldiereg",
+   "i": "ss"
+  },
+  "士兵F.A.": {
+   "p": "shibingf.a.soldierfa",
+   "i": "ss"
+  },
+  "产品08": {
+   "p": "chanpin08product08",
+   "i": "cp"
+  },
+  "产品12": {
+   "p": "chanpin12product12",
+   "i": "cp"
+  },
+  "iDoll花": {
+   "p": "idollhuaidollflower",
+   "i": "ii"
+  },
+  "iDoll海": {
+   "p": "idollhaiidollocean",
+   "i": "ii"
+  },
+  "士兵O.W.": {
+   "p": "shibingo.w.soldierow",
+   "i": "ss"
+  },
+  "产品23": {
+   "p": "chanpin23product23",
+   "i": "cp"
+  },
+  "iDoll太阳": {
+   "p": "idolltaiyangidollsun",
+   "i": "ii"
+  },
+  "爱德": {
+   "p": "aideade",
+   "i": "aa"
+  },
+  "可可": {
+   "p": "kekecocoa",
+   "i": "kc"
+  },
+  "索达": {
+   "p": "suodasoda",
+   "i": "ss"
+  },
+  "普丽瓦蒂：不友善的女仆": {
+   "p": "puliwadi：buyoushandenvpuprivatyunkindmaid",
+   "i": "pp"
+  },
+  "索达：闪亮兔女郎": {
+   "p": "suoda：shanliangtunvlangsodatwinklingbunny",
+   "i": "ss"
+  },
+  "爱德：特工兔女郎": {
+   "p": "aide：tegongtunvlangadeagentbunny",
+   "i": "aa"
+  },
+  "薇尔维特": {
+   "p": "weierweitevelvet",
+   "i": "wv"
+  },
+  "玛律恰那": {
+   "p": "malvqianamarciana",
+   "i": "mm"
+  },
+  "玛律恰那：海洋进修": {
+   "p": "malvqiana：haiyangjinxiumarcianamarinestudy",
+   "i": "mm"
+  },
+  "皇冠": {
+   "p": "huangguancrown",
+   "i": "hc"
+  },
+  "钟鸣": {
+   "p": "zhongmingchime",
+   "i": "zc"
+  },
+  "马斯特": {
+   "p": "masitemast",
+   "i": "mm"
+  },
+  "马斯特 (原型)": {
+   "p": "masite (yuanxing)mastold",
+   "i": "mm"
+  },
+  "安克": {
+   "p": "ankeanchor",
+   "i": "aa"
+  },
+  "海伦": {
+   "p": "hailunhelm",
+   "i": "hh"
+  },
+  "海伦：海蓝宝石": {
+   "p": "hailun：hailanbaoshihelmaquamarine",
+   "i": "hh"
+  },
+  "马斯特：浪漫的女仆": {
+   "p": "masite：langmandenvpumastromanticmaid",
+   "i": "mm"
+  },
+  "安克：天真的女仆": {
+   "p": "anke：tianzhendenvpuanchorinnocentmaid",
+   "i": "aa"
+  },
+  "吉洛": {
+   "p": "jiluokilo",
+   "i": "jk"
+  },
+  "伊特妮缇": {
+   "p": "yitenitieternity",
+   "i": "ye"
+  },
+  "恩德莉丝": {
+   "p": "endelisiendless",
+   "i": "ee"
+  },
+  "尼罗": {
+   "p": "niluonero",
+   "i": "nn"
+  },
+  "饼干": {
+   "p": "bingganbiscuit",
+   "i": "bb"
+  },
+  "莱昂纳": {
+   "p": "laiangnaleona",
+   "i": "ll"
+  },
+  "茨瓦伊": {
+   "p": "ciwayizwei",
+   "i": "cz"
+  },
+  "爱因": {
+   "p": "aiyinein",
+   "i": "ae"
+  },
+  "莱伊": {
+   "p": "laiyirei",
+   "i": "lr"
+  },
+  "吉尔提": {
+   "p": "jiertiguilty",
+   "i": "jg"
+  },
+  "森": {
+   "p": "sensin",
+   "i": "ss"
+  },
+  "坎西": {
+   "p": "kanxiquency",
+   "i": "kq"
+  },
+  "坎西：逃生女王": {
+   "p": "kanxi：taoshengnvwangquencyescapequeen",
+   "i": "kq"
+  },
+  "芙罗拉": {
+   "p": "fuluolaflora",
+   "i": "ff"
+  },
+  "特蕾娜": {
+   "p": "teleinatrina",
+   "i": "tt"
+  },
+  "诺伊斯": {
+   "p": "nuoyisinoise",
+   "i": "nn"
+  },
+  "沃纶姆": {
+   "p": "wolunmuvolume",
+   "i": "wv"
+  },
+  "阿莉亚": {
+   "p": "aliyaaria",
+   "i": "aa"
+  },
+  "爱莉": {
+   "p": "ailieyeri",
+   "i": "ae"
+  },
+  "阿维斯塔": {
+   "p": "aweisitaavistar",
+   "i": "aa"
+  },
+  "娜嘉": {
+   "p": "najianaga",
+   "i": "nn"
+  },
+  "蒂亚": {
+   "p": "diyatia",
+   "i": "dt"
+  },
+  "小红帽": {
+   "p": "xiaohongmaoredhood",
+   "i": "xr"
+  },
+  "白雪公主：重型武装": {
+   "p": "baixuegongzhu：zhongxingwuzhuangsnowwhiteheavyarms",
+   "i": "bs"
+  },
+  "长发公主：纯洁修女": {
+   "p": "changfagongzhu：chunjiexiunvrapunzel",
+   "i": "cr"
+  },
+  "利弗林": {
+   "p": "lifulinliveryn",
+   "i": "ll"
+  },
+  "芙拉吉尔": {
+   "p": "fulajierfragile",
+   "i": "ff"
+  },
+  "罗吉 (#000000)": {
+   "p": "luoji (#000000)000000logey",
+   "i": "l0"
+  },
+  "哈梅林": {
+   "p": "hameilinhammering",
+   "i": "hh"
+  },
+  "德里尔林": {
+   "p": "delierlindrilley",
+   "i": "dd"
+  },
+  "伊莱格": {
+   "p": "yilaigeelegg",
+   "i": "ye"
+  },
+  "特罗尼": {
+   "p": "teluonitrony",
+   "i": "tt"
+  },
+  "伊莱格：BOOM与惊吓": {
+   "p": "yilaige：boomyujingxiaeleggboomandshock",
+   "i": "ye"
+  },
+  "格拉维": {
+   "p": "gelaweigrave",
+   "i": "gg"
+  },
+  "灰姑娘": {
+   "p": "huiguniangcinderella",
+   "i": "hc"
+  },
+  "小美人鱼": {
+   "p": "xiaomeirenyulittlemermaid",
+   "i": "xl"
+  },
+  "格拉维 (c514)": {
+   "p": "gelawei (c514)gravec514",
+   "i": "gg"
+  },
+  "灰姑娘：琉璃波光": {
+   "p": "huiguniang：liuliboguangcinderellacrystalwave",
+   "i": "hc"
+  },
+  "布蕾德": {
+   "p": "buleidebready",
+   "i": "bb"
+  },
+  "克劳斯特": {
+   "p": "kelaositecrust",
+   "i": "kc"
+  },
+  "思凯": {
+   "p": "sikaisky",
+   "i": "ss"
+  },
+  "西埃洛": {
+   "p": "xiailuocielo",
+   "i": "xc"
+  },
+  "索拉": {
+   "p": "suolasora",
+   "i": "ss"
+  },
+  "贝伊": {
+   "p": "beiyibay",
+   "i": "bb"
+  },
+  "克雷伊": {
+   "p": "keleiyiclay",
+   "i": "kc"
+  },
+  "贝西摩斯": {
+   "p": "beiximosibehemoth",
+   "i": "bb"
+  },
+  "席兹": {
+   "p": "xiziziz",
+   "i": "xz"
+  },
+  "利维坦": {
+   "p": "liweitanleviathan",
+   "i": "ll"
+  },
+  "巴哈姆特": {
+   "p": "bahamutebahamut",
+   "i": "bb"
+  },
+  "方舟黑色游侠": {
+   "p": "fangzhouheiseyouxiaarkrangerblack",
+   "i": "fa"
+  },
+  "方舟红色游侠": {
+   "p": "fangzhouhongseyouxiaarkrangerred",
+   "i": "fa"
+  },
+  "方舟蓝色游侠": {
+   "p": "fangzhoulanseyouxiaarkrangerblue",
+   "i": "fa"
+  },
+  "潘托姆": {
+   "p": "pantuomuphantom",
+   "i": "pp"
+  },
+  "阿尔卡娜": {
+   "p": "aerkanaarcana",
+   "i": "aa"
+  },
+  "蕾贝儿": {
+   "p": "leibeierlabel",
+   "i": "ll"
+  },
+  "阿尔卡娜：命运伴侣": {
+   "p": "aerkana：mingyunbanlvarcanafortunemate",
+   "i": "aa"
+  },
+  "莫莉": {
+   "p": "molimori",
+   "i": "mm"
+  },
+  "敏特": {
+   "p": "mintemint",
+   "i": "mm"
+  },
+  "普莉卡": {
+   "p": "pulikaprika",
+   "i": "pp"
+  },
+  "机甲神谢芙蒂": {
+   "p": "jijiashenxiefudimekamishifty",
+   "i": "jm"
+  },
+  "白鹤": {
+   "p": "baihesnowcrane",
+   "i": "bs"
+  },
+  "玛奇玛": {
+   "p": "maqimamakima",
+   "i": "mm"
+  },
+  "帕瓦": {
+   "p": "pawapower",
+   "i": "pp"
+  },
+  "姬野": {
+   "p": "jiyehimeno",
+   "i": "jh"
+  },
+  "电次": {
+   "p": "diancidenji",
+   "i": "dd"
+  },
+  "早川秋": {
+   "p": "zaochuanqiuakihayakawa",
+   "i": "za"
+  },
+  "2B": {
+   "p": "2b2b",
+   "i": "22"
+  },
+  "A2": {
+   "p": "a2a2",
+   "i": "aa"
+  },
+  "帕斯卡": {
+   "p": "pasikapascal",
+   "i": "pp"
+  },
+  "9S": {
+   "p": "9s9s",
+   "i": "99"
+  },
+  "雷姆": {
+   "p": "leimurem",
+   "i": "lr"
+  },
+  "爱蜜莉雅": {
+   "p": "aimiliyaemilia",
+   "i": "ae"
+  },
+  "拉姆": {
+   "p": "lamuram",
+   "i": "lr"
+  },
+  "明日香": {
+   "p": "mingrixiangasuka",
+   "i": "ma"
+  },
+  "零": {
+   "p": "lingrei",
+   "i": "lr"
+  },
+  "真理": {
+   "p": "zhenlimari",
+   "i": "zm"
+  },
+  "美里": {
+   "p": "meilimisato",
+   "i": "mm"
+  },
+  "零（暂称）": {
+   "p": "ling（zancheng）reitentativename",
+   "i": "lr"
+  },
+  "明日香：WILLE": {
+   "p": "mingrixiang：willeasukawille",
+   "i": "ma"
+  },
+  "樱": {
+   "p": "yingsakura",
+   "i": "ys"
+  },
+  "艾达": {
+   "p": "aidaada",
+   "i": "aa"
+  },
+  "吉儿": {
+   "p": "jierjill",
+   "i": "jj"
+  },
+  "克莱尔": {
+   "p": "kelaierclaire",
+   "i": "kc"
+  },
+  "伊芙": {
+   "p": "yifueve",
+   "i": "ye"
+  },
+  "渡鸦": {
+   "p": "duyaraven",
+   "i": "dr"
+  },
+  "百合": {
+   "p": "baihelily",
+   "i": "bl"
+  },
+  "亚当": {
+   "p": "yadangadam",
+   "i": "ya"
+  },
+  "千束": {
+   "p": "qianshuchisato",
+   "i": "qc"
+  },
+  "泷奈": {
+   "p": "longnaitakina",
+   "i": "lt"
+  },
+  "胡桃": {
+   "p": "hutaokurumi",
+   "i": "hk"
+  },
+  "QUEEN（真）": {
+   "p": "queen（zhen）queenmakoto",
+   "i": "qq"
+  },
+  "雪子": {
+   "p": "xueziyukiko",
+   "i": "xy"
+  },
+  "埃癸斯": {
+   "p": "aiguisiaigis",
+   "i": "aa"
+  },
+  "Ying Ning (婴宁) (CN)": {
+   "p": "ying ning (yingning) (cn)ying ning (yingning) (cn)",
+   "i": "yy"
+  },
+  "Hua Pi (画皮) (CN)": {
+   "p": "hua pi (huapi) (cn)hua pi (huapi) (cn)",
+   "i": "hh"
+  },
+  "Ying Ning (婴宁) (CN) (c8006)": {
+   "p": "ying ning (yingning) (cn) (c8006)ying ning (yingning) (cn) (c800",
+   "i": "yy"
+  }
+ },
+ "skins": {
+  "拉毗": {
+   "p": "lapi",
+   "i": "l"
+  },
+  "Rapi_old": {
+   "p": "rapiold",
+   "i": "r"
+  },
+  "拉毗 白色诺言": {
+   "p": "lapi baisenuoyan",
+   "i": "l"
+  },
+  "拉毗 经典假期": {
+   "p": "lapi jingdianjiaqi",
+   "i": "l"
+  },
+  "尼恩": {
+   "p": "nien",
+   "i": "n"
+  },
+  "尼恩 闪亮子弹": {
+   "p": "nien shanliangzidan",
+   "i": "n"
+  },
+  "阿妮斯": {
+   "p": "anisi",
+   "i": "a"
+  },
+  "玛丽安": {
+   "p": "malian",
+   "i": "m"
+  },
+  "尼恩：蓝色海洋": {
+   "p": "nien：lansehaiyang",
+   "i": "n"
+  },
+  "阿妮斯：闪耀夏日": {
+   "p": "anisi：shanyaoxiari",
+   "i": "a"
+  },
+  "拉毗：小红帽": {
+   "p": "lapi：xiaohongmao",
+   "i": "l"
+  },
+  "拉毗：小红帽 红色风情": {
+   "p": "lapi：xiaohongmao hongsefengqing",
+   "i": "l"
+  },
+  "拉毗：小红帽 挚爱之红": {
+   "p": "lapi：xiaohongmao zhiaizhihong",
+   "i": "l"
+  },
+  "拉毗：小红帽 耀光": {
+   "p": "lapi：xiaohongmao yaoguang",
+   "i": "l"
+  },
+  "阿妮斯：超级巨星": {
+   "p": "anisi：chaojijuxing",
+   "i": "a"
+  },
+  "阿妮斯：超级巨星 星光": {
+   "p": "anisi：chaojijuxing xingguang",
+   "i": "a"
+  },
+  "阿妮斯：超级巨星 T.T. STAR": {
+   "p": "anisi：chaojijuxing t.t. star",
+   "i": "a"
+  },
+  "尼恩：透视之眼": {
+   "p": "nien：toushizhiyan",
+   "i": "n"
+  },
+  "德尔塔": {
+   "p": "deerta",
+   "i": "d"
+  },
+  "西格娜": {
+   "p": "xigena",
+   "i": "x"
+  },
+  "西格娜 甜蜜宅配员": {
+   "p": "xigena tianmizhaipeiyuan",
+   "i": "x"
+  },
+  "德尔塔：怪盗忍者": {
+   "p": "deerta：guaidaorenzhe",
+   "i": "d"
+  },
+  "波莉": {
+   "p": "boli",
+   "i": "b"
+  },
+  "波莉 甜美控": {
+   "p": "boli tianmeikong",
+   "i": "b"
+  },
+  "波莉 警察加油": {
+   "p": "boli jingchajiayou",
+   "i": "b"
+  },
+  "米兰达": {
+   "p": "milanda",
+   "i": "m"
+  },
+  "米兰达 正义怪盗": {
+   "p": "milanda zhengyiguaidao",
+   "i": "m"
+  },
+  "基里": {
+   "p": "jili",
+   "i": "j"
+  },
+  "D": {
+   "p": "d",
+   "i": "d"
+  },
+  "K": {
+   "p": "k",
+   "i": "k"
+  },
+  "K 秘密行动": {
+   "p": "k mimixingdong",
+   "i": "k"
+  },
+  "D：杀手妻子": {
+   "p": "d：shashouqizi",
+   "i": "d"
+  },
+  "D：杀手妻子 秘密派对清洁工": {
+   "p": "d：shashouqizi mimipaiduiqingjiegong",
+   "i": "d"
+  },
+  "D：杀手妻子 秘密警探": {
+   "p": "d：shashouqizi mimijingtan",
+   "i": "d"
+  },
+  "贝洛塔": {
+   "p": "beiluota",
+   "i": "b"
+  },
+  "米卡": {
+   "p": "mika",
+   "i": "m"
+  },
+  "米卡：雪地伙伴": {
+   "p": "mika：xuedihuoban",
+   "i": "m"
+  },
+  "布丽德": {
+   "p": "bulide",
+   "i": "b"
+  },
+  "布丽德 古典工作服": {
+   "p": "bulide gudiangongzuofu",
+   "i": "b"
+  },
+  "布丽德 黑月": {
+   "p": "bulide heiyue",
+   "i": "b"
+  },
+  "索林": {
+   "p": "suolin",
+   "i": "s"
+  },
+  "迪塞尔": {
+   "p": "disaier",
+   "i": "d"
+  },
+  "迪塞尔 黑色假日": {
+   "p": "disaier heisejiari",
+   "i": "d"
+  },
+  "迪塞尔 草莓花朵": {
+   "p": "disaier caomeihuaduo",
+   "i": "d"
+  },
+  "迪塞尔 午夜草莓": {
+   "p": "disaier wuyecaomei",
+   "i": "d"
+  },
+  "布丽德：静默轨道": {
+   "p": "bulide：jingmoguidao",
+   "i": "b"
+  },
+  "索林：霜之旅票": {
+   "p": "suolin：shuangzhilvpiao",
+   "i": "s"
+  },
+  "迪塞尔：冬日甜心": {
+   "p": "disaier：dongritianxin",
+   "i": "d"
+  },
+  "桑迪": {
+   "p": "sangdi",
+   "i": "s"
+  },
+  "桑迪 非凡假日": {
+   "p": "sangdi feifanjiari",
+   "i": "s"
+  },
+  "桑迪 海洋维修": {
+   "p": "sangdi haiyangweixiu",
+   "i": "s"
+  },
+  "丽塔": {
+   "p": "lita",
+   "i": "l"
+  },
+  "丽塔 菲什加德": {
+   "p": "lita feishenjiade",
+   "i": "l"
+  },
+  "丽塔 可爱向日葵": {
+   "p": "lita keaixiangrikui",
+   "i": "l"
+  },
+  "Liter (CN)": {
+   "p": "litercn",
+   "i": "l"
+  },
+  "艾玛": {
+   "p": "aima",
+   "i": "a"
+  },
+  "艾玛 宝贝红": {
+   "p": "aima baobeihong",
+   "i": "a"
+  },
+  "艾玛 办公室疗法": {
+   "p": "aima bangongshiliaofa",
+   "i": "a"
+  },
+  "贝斯蒂": {
+   "p": "beisidi",
+   "i": "b"
+  },
+  "贝斯蒂 方舟魔法师": {
+   "p": "beisidi fangzhoumofashi",
+   "i": "b"
+  },
+  "银华": {
+   "p": "yinhua",
+   "i": "y"
+  },
+  "艾玛：战术升级": {
+   "p": "aima：zhanshushengji",
+   "i": "a"
+  },
+  "艾玛：战术升级 秘密疗法": {
+   "p": "aima：zhanshushengji mimiliaofa",
+   "i": "a"
+  },
+  "贝斯蒂：战术升级": {
+   "p": "beisidi：zhanshushengji",
+   "i": "b"
+  },
+  "贝斯蒂：战术升级 青涩新生": {
+   "p": "beisidi：zhanshushengji qingsexinsheng",
+   "i": "b"
+  },
+  "银华：战术升级": {
+   "p": "yinhua：zhanshushengji",
+   "i": "y"
+  },
+  "银华：战术升级 休假日": {
+   "p": "yinhua：zhanshushengji xiujiari",
+   "i": "y"
+  },
+  "拉普拉斯": {
+   "p": "lapulasi",
+   "i": "l"
+  },
+  "德雷克": {
+   "p": "deleike",
+   "i": "d"
+  },
+  "德雷克 反派赛车手": {
+   "p": "deleike fanpaisaicheshou",
+   "i": "d"
+  },
+  "德雷克 反派专属女仆": {
+   "p": "deleike fanpaizhuanshunvpu",
+   "i": "d"
+  },
+  "麦斯威尔": {
+   "p": "maisiweier",
+   "i": "m"
+  },
+  "麦斯威尔 机械白": {
+   "p": "maisiweier jixiebai",
+   "i": "m"
+  },
+  "拉普拉斯：究极英雄": {
+   "p": "lapulasi：jiujiyingxiong",
+   "i": "l"
+  },
+  "拉普拉斯：究极英雄 原型英雄": {
+   "p": "lapulasi：jiujiyingxiong yuanxingyingxiong",
+   "i": "l"
+  },
+  "麦斯威尔：平凡技师": {
+   "p": "maisiweier：pingfanjishi",
+   "i": "m"
+  },
+  "麦斯威尔：平凡技师 首席研究员": {
+   "p": "maisiweier：pingfanjishi shouxiyanjiuyuan",
+   "i": "m"
+  },
+  "克拉乌": {
+   "p": "kelawu",
+   "i": "k"
+  },
+  "豺狼": {
+   "p": "chailang",
+   "i": "c"
+  },
+  "豺狼 獠牙同窗": {
+   "p": "chailang liaoyatongchuang",
+   "i": "c"
+  },
+  "毒蛇": {
+   "p": "dushe",
+   "i": "d"
+  },
+  "毒蛇 毒兔": {
+   "p": "dushe dutu",
+   "i": "d"
+  },
+  "毒蛇 爱情光芒": {
+   "p": "dushe aiqingguangmang",
+   "i": "d"
+  },
+  "毒蛇 街头朋克": {
+   "p": "dushe jietoupengke",
+   "i": "d"
+  },
+  "E.H.": {
+   "p": "eh",
+   "i": "e"
+  },
+  "E.H. 极道先锋": {
+   "p": "e.h. jidaoxianfeng",
+   "i": "e"
+  },
+  "N102": {
+   "p": "n102",
+   "i": "n"
+  },
+  "安妮：奇迹仙女": {
+   "p": "anni：qijixiannv",
+   "i": "a"
+  },
+  "梅里": {
+   "p": "meili",
+   "i": "m"
+  },
+  "梅里 医疗兔": {
+   "p": "meili yiliaotu",
+   "i": "m"
+  },
+  "佩珀": {
+   "p": "peipo",
+   "i": "p"
+  },
+  "佩珀 海洋维他命": {
+   "p": "peipo haiyangweitaming",
+   "i": "p"
+  },
+  "梅里：海湾女神": {
+   "p": "meili：haiwannvshen",
+   "i": "m"
+  },
+  "舒格": {
+   "p": "shuge",
+   "i": "s"
+  },
+  "舒格 叫我冷硬派": {
+   "p": "shuge jiaowolengyingpai",
+   "i": "s"
+  },
+  "舒格 狂野后花园": {
+   "p": "shuge kuangyehouhuayuan",
+   "i": "s"
+  },
+  "米尔克": {
+   "p": "mierke",
+   "i": "m"
+  },
+  "米尔克 极限战士": {
+   "p": "mierke jixianzhanshi",
+   "i": "m"
+  },
+  "普琳玛": {
+   "p": "pulinma",
+   "i": "p"
+  },
+  "普琳玛 慵懒海滩": {
+   "p": "pulinma yonglanhaitan",
+   "i": "p"
+  },
+  "米尔克：花漾兔女郎": {
+   "p": "mierke：huayangtunvlang",
+   "i": "m"
+  },
+  "尤莉亚": {
+   "p": "youliya",
+   "i": "y"
+  },
+  "尤莉亚 温柔夜曲": {
+   "p": "youliya wenrouyequ",
+   "i": "y"
+  },
+  "尤莉亚 夏日浪漫": {
+   "p": "youliya xiarilangman",
+   "i": "y"
+  },
+  "尤妮": {
+   "p": "youni",
+   "i": "y"
+  },
+  "尤妮 可爱粉色": {
+   "p": "youni keaifense",
+   "i": "y"
+  },
+  "米哈拉": {
+   "p": "mihala",
+   "i": "m"
+  },
+  "米哈拉：羁绊锁链": {
+   "p": "mihala：jibansuolian",
+   "i": "m"
+  },
+  "米哈拉：羁绊锁链 痛苦吞食者": {
+   "p": "mihala：jibansuolian tongkutunshizhe",
+   "i": "m"
+  },
+  "普丽瓦蒂": {
+   "p": "puliwadi",
+   "i": "p"
+  },
+  "普丽瓦蒂 行政正装": {
+   "p": "puliwadi xingzhengzhengzhuang",
+   "i": "p"
+  },
+  "普丽瓦蒂 宴会公主": {
+   "p": "puliwadi yanhuigongzhu",
+   "i": "p"
+  },
+  "普丽瓦蒂 青之羁绊": {
+   "p": "puliwadi qingzhijiban",
+   "i": "p"
+  },
+  "普丽瓦蒂 严厉教诲": {
+   "p": "puliwadi yanlijiaohui",
+   "i": "p"
+  },
+  "尤尔夏": {
+   "p": "youerxia",
+   "i": "y"
+  },
+  "艾德米": {
+   "p": "aidemi",
+   "i": "a"
+  },
+  "吉萝婷": {
+   "p": "jiluoting",
+   "i": "j"
+  },
+  "吉萝婷 黑暗追踪者": {
+   "p": "jiluoting heianzhuizongzhe",
+   "i": "j"
+  },
+  "梅登": {
+   "p": "meideng",
+   "i": "m"
+  },
+  "吉萝婷：寒冬杀手": {
+   "p": "jiluoting：handongshashou",
+   "i": "j"
+  },
+  "梅登：冰玫瑰": {
+   "p": "meideng：bingmeigui",
+   "i": "m"
+  },
+  "梅登 秘密护士": {
+   "p": "meideng mimihushi",
+   "i": "m"
+  },
+  "梅登 艳阳之下": {
+   "p": "meideng yanyangzhixia",
+   "i": "m"
+  },
+  "鲁德米拉": {
+   "p": "ludemila",
+   "i": "l"
+  },
+  "爱丽丝": {
+   "p": "ailisi",
+   "i": "a"
+  },
+  "爱丽丝 甜蜜之家": {
+   "p": "ailisi tianmizhijia",
+   "i": "a"
+  },
+  "爱丽丝 童话幻梦": {
+   "p": "ailisi tonghuahuanmeng",
+   "i": "a"
+  },
+  "托比": {
+   "p": "tuobi",
+   "i": "t"
+  },
+  "托比 我爱棒球": {
+   "p": "tuobi woaibangqiu",
+   "i": "t"
+  },
+  "托比 烈阳": {
+   "p": "tuobi lieyang",
+   "i": "t"
+  },
+  "尼夫": {
+   "p": "nifu",
+   "i": "n"
+  },
+  "鲁德米拉：冬日之主": {
+   "p": "ludemila：dongrizhizhu",
+   "i": "l"
+  },
+  "爱丽丝：仙境兔女郎": {
+   "p": "ailisi：xianjingtunvlang",
+   "i": "a"
+  },
+  "露菲": {
+   "p": "lufei",
+   "i": "l"
+  },
+  "露菲 奢侈兔": {
+   "p": "lufei shechitu",
+   "i": "l"
+  },
+  "杨": {
+   "p": "yang",
+   "i": "y"
+  },
+  "杨 黎明超市": {
+   "p": "yang limingchaoshi",
+   "i": "y"
+  },
+  "朵拉": {
+   "p": "duola",
+   "i": "d"
+  },
+  "朵拉 黑玫瑰": {
+   "p": "duola heimeigui",
+   "i": "d"
+  },
+  "露菲：冬日购物狂": {
+   "p": "lufei：dongrigouwukuang",
+   "i": "l"
+  },
+  "艾可希雅": {
+   "p": "aikexiya",
+   "i": "a"
+  },
+  "艾可希雅 书呆子日快乐": {
+   "p": "aikexiya shudaizirikuaile",
+   "i": "a"
+  },
+  "艾可希雅 游戏玩家": {
+   "p": "aikexiya youxiwanjia",
+   "i": "a"
+  },
+  "艾可希雅 黑客兔": {
+   "p": "aikexiya heiketu",
+   "i": "a"
+  },
+  "诺薇儿": {
+   "p": "nuoweier",
+   "i": "n"
+  },
+  "诺薇儿 企鹅福尔摩斯": {
+   "p": "nuoweier qiefuermosi",
+   "i": "n"
+  },
+  "诺薇儿 侦探护士": {
+   "p": "nuoweier zhentanhushi",
+   "i": "n"
+  },
+  "白雪公主": {
+   "p": "baixuegongzhu",
+   "i": "b"
+  },
+  "白雪公主 白色骑士": {
+   "p": "baixuegongzhu baiseqishi",
+   "i": "b"
+  },
+  "长发公主": {
+   "p": "changfagongzhu",
+   "i": "c"
+  },
+  "红莲": {
+   "p": "honglian",
+   "i": "h"
+  },
+  "红莲 狂飙车手": {
+   "p": "honglian kuangbiaocheshou",
+   "i": "h"
+  },
+  "娜由塔": {
+   "p": "nayouta",
+   "i": "n"
+  },
+  "娜由塔 无为": {
+   "p": "nayouta wuwei",
+   "i": "n"
+  },
+  "白雪公主：纯真年代": {
+   "p": "baixuegongzhu：chunzhenniandai",
+   "i": "b"
+  },
+  "红莲：暗影": {
+   "p": "honglian：anying",
+   "i": "h"
+  },
+  "红莲：暗影 莲花": {
+   "p": "honglian：anying lianhua",
+   "i": "h"
+  },
+  "长发公主：纯洁恩典": {
+   "p": "changfagongzhu：chunjieendian",
+   "i": "c"
+  },
+  "匹诺曹": {
+   "p": "pinuocao",
+   "i": "p"
+  },
+  "哈兰": {
+   "p": "halan",
+   "i": "h"
+  },
+  "哈兰 宴会的魔女": {
+   "p": "halan yanhuidemonv",
+   "i": "h"
+  },
+  "伊莎贝尔": {
+   "p": "yishabeier",
+   "i": "y"
+  },
+  "伊莎贝尔 蜜月派对": {
+   "p": "yishabeier miyuepaidui",
+   "i": "y"
+  },
+  "诺雅": {
+   "p": "nuoya",
+   "i": "n"
+  },
+  "桃乐丝": {
+   "p": "taolesi",
+   "i": "t"
+  },
+  "桃乐丝：机缘巧遇": {
+   "p": "taolesi：jiyuanqiaoyu",
+   "i": "t"
+  },
+  "桃乐丝 怀旧": {
+   "p": "taolesi huaijiu",
+   "i": "t"
+  },
+  "桃乐丝 月光": {
+   "p": "taolesi yueguang",
+   "i": "t"
+  },
+  "Dorothy (CN)": {
+   "p": "dorothycn",
+   "i": "d"
+  },
+  "鲁玛妮": {
+   "p": "lumani",
+   "i": "l"
+  },
+  "艾菲涅尔": {
+   "p": "aifeinieer",
+   "i": "a"
+  },
+  "富克旺": {
+   "p": "fukewang",
+   "i": "f"
+  },
+  "富克旺 湿润兔": {
+   "p": "fukewang shiruntu",
+   "i": "f"
+  },
+  "Mass Produced Red": {
+   "p": "massproducedred",
+   "i": "m"
+  },
+  "Mass Produced Blue": {
+   "p": "massproducedblue",
+   "i": "m"
+  },
+  "Mass Produced Orange": {
+   "p": "massproducedorange",
+   "i": "m"
+  },
+  "Mass Produced Green": {
+   "p": "massproducedgreen",
+   "i": "m"
+  },
+  "Mass Produced Purple": {
+   "p": "massproducedpurple",
+   "i": "m"
+  },
+  "Mass Produced White": {
+   "p": "massproducedwhite",
+   "i": "m"
+  },
+  "神罚": {
+   "p": "shenfa",
+   "i": "s"
+  },
+  "神罚 初次的爱恋": {
+   "p": "shenfa chucideailian",
+   "i": "s"
+  },
+  "神罚 第二种情感": {
+   "p": "shenfa dierzhongqinggan",
+   "i": "s"
+  },
+  "Modernia (CN)": {
+   "p": "moderniacn",
+   "i": "m"
+  },
+  "尼希利斯塔": {
+   "p": "nixilisita",
+   "i": "n"
+  },
+  "莉贝雷利奥": {
+   "p": "libeileiliao",
+   "i": "l"
+  },
+  "莉贝雷利奥 梦境湖": {
+   "p": "libeileiliao mengjinghu",
+   "i": "l"
+  },
+  "茵迪维利亚": {
+   "p": "yindiweiliya",
+   "i": "y"
+  },
+  "布兰儿": {
+   "p": "bulaner",
+   "i": "b"
+  },
+  "布兰儿 白兔": {
+   "p": "bulaner baitu",
+   "i": "b"
+  },
+  "布兰儿 77号击球员": {
+   "p": "bulaner 77haojiqiuyuan",
+   "i": "b"
+  },
+  "布兰儿 幸运特快车": {
+   "p": "bulaner xingyuntekuaiche",
+   "i": "b"
+  },
+  "诺亚尔": {
+   "p": "nuoyaer",
+   "i": "n"
+  },
+  "诺亚尔 黑兔": {
+   "p": "nuoyaer heitu",
+   "i": "n"
+  },
+  "诺亚尔 棒球啦啦队": {
+   "p": "nuoyaer bangqiulaladui",
+   "i": "n"
+  },
+  "露姬": {
+   "p": "luji",
+   "i": "l"
+  },
+  "露姬 倒霉兔": {
+   "p": "luji daomeitu",
+   "i": "l"
+  },
+  "罗珊娜": {
+   "p": "luoshanna",
+   "i": "l"
+  },
+  "罗珊娜 危险小姐": {
+   "p": "luoshanna weixianxiaojie",
+   "i": "l"
+  },
+  "牡丹": {
+   "p": "mudan",
+   "i": "m"
+  },
+  "牡丹 休假女王": {
+   "p": "mudan xiujianvwang",
+   "i": "m"
+  },
+  "牡丹 百花之王": {
+   "p": "mudan baihuazhiwang",
+   "i": "m"
+  },
+  "樱花": {
+   "p": "yinghua",
+   "i": "y"
+  },
+  "樱花 黑夜潜行": {
+   "p": "yinghua heiyeqianxing",
+   "i": "y"
+  },
+  "罗珊娜：高雅海洋": {
+   "p": "luoshanna：gaoyahaiyang",
+   "i": "l"
+  },
+  "樱花：夏日绽放": {
+   "p": "yinghua：xiarizhanfang",
+   "i": "y"
+  },
+  "玛娜": {
+   "p": "mana",
+   "i": "m"
+  },
+  "艾瑟儿": {
+   "p": "aiseer",
+   "i": "a"
+  },
+  "士兵E.G.": {
+   "p": "shibinge.g.",
+   "i": "s"
+  },
+  "士兵F.A.": {
+   "p": "shibingf.a.",
+   "i": "s"
+  },
+  "产品08": {
+   "p": "chanpin08",
+   "i": "c"
+  },
+  "产品12": {
+   "p": "chanpin12",
+   "i": "c"
+  },
+  "iDoll花": {
+   "p": "idollhua",
+   "i": "i"
+  },
+  "iDoll海": {
+   "p": "idollhai",
+   "i": "i"
+  },
+  "士兵O.W.": {
+   "p": "shibingo.w.",
+   "i": "s"
+  },
+  "产品23": {
+   "p": "chanpin23",
+   "i": "c"
+  },
+  "iDoll太阳": {
+   "p": "idolltaiyang",
+   "i": "i"
+  },
+  "爱德": {
+   "p": "aide",
+   "i": "a"
+  },
+  "爱德 春日之作": {
+   "p": "aide chunrizhizuo",
+   "i": "a"
+  },
+  "可可": {
+   "p": "keke",
+   "i": "k"
+  },
+  "索达": {
+   "p": "suoda",
+   "i": "s"
+  },
+  "普丽瓦蒂：不友善的女仆": {
+   "p": "puliwadi：buyoushandenvpu",
+   "i": "p"
+  },
+  "索达：闪亮兔女郎": {
+   "p": "suoda：shanliangtunvlang",
+   "i": "s"
+  },
+  "爱德：特工兔女郎": {
+   "p": "aide：tegongtunvlang",
+   "i": "a"
+  },
+  "薇尔维特": {
+   "p": "weierweite",
+   "i": "w"
+  },
+  "薇尔维特 魅惑兔": {
+   "p": "weierweite meihuotu",
+   "i": "w"
+  },
+  "玛律恰那": {
+   "p": "malvqiana",
+   "i": "m"
+  },
+  "玛律恰那 学生时代": {
+   "p": "malvqiana xueshengshidai",
+   "i": "m"
+  },
+  "玛律恰那：海洋进修": {
+   "p": "malvqiana：haiyangjinxiu",
+   "i": "m"
+  },
+  "皇冠": {
+   "p": "huangguan",
+   "i": "h"
+  },
+  "皇冠 国王的新衣": {
+   "p": "huangguan guowangdexinyi",
+   "i": "h"
+  },
+  "皇冠 荣耀之花": {
+   "p": "huangguan rongyaozhihua",
+   "i": "h"
+  },
+  "钟鸣": {
+   "p": "zhongming",
+   "i": "z"
+  },
+  "马斯特": {
+   "p": "masite",
+   "i": "m"
+  },
+  "马斯特 海盗之心": {
+   "p": "masite haidaozhixin",
+   "i": "m"
+  },
+  "马斯特 潜水员马斯特": {
+   "p": "masite qianshuiyuanmasite",
+   "i": "m"
+  },
+  "Mast_old": {
+   "p": "mastold",
+   "i": "m"
+  },
+  "安克": {
+   "p": "anke",
+   "i": "a"
+  },
+  "安克 潜水员安克": {
+   "p": "anke qianshuiyuananke",
+   "i": "a"
+  },
+  "海伦": {
+   "p": "hailun",
+   "i": "h"
+  },
+  "海伦 水晶派对": {
+   "p": "hailun shuijingpaidui",
+   "i": "h"
+  },
+  "海伦 浴后": {
+   "p": "hailun yuhou",
+   "i": "h"
+  },
+  "海伦：海蓝宝石": {
+   "p": "hailun：hailanbaoshi",
+   "i": "h"
+  },
+  "马斯特：浪漫的女仆": {
+   "p": "masite：langmandenvpu",
+   "i": "m"
+  },
+  "马斯特：浪漫的女仆 茶饮服务": {
+   "p": "masite：langmandenvpu chayinfuwu",
+   "i": "m"
+  },
+  "安克：天真的女仆": {
+   "p": "anke：tianzhendenvpu",
+   "i": "a"
+  },
+  "吉洛": {
+   "p": "jiluo",
+   "i": "j"
+  },
+  "伊特妮缇": {
+   "p": "yiteniti",
+   "i": "y"
+  },
+  "恩德莉丝": {
+   "p": "endelisi",
+   "i": "e"
+  },
+  "尼罗": {
+   "p": "niluo",
+   "i": "n"
+  },
+  "饼干": {
+   "p": "binggan",
+   "i": "b"
+  },
+  "饼干 春日幼犬": {
+   "p": "binggan chunriyouquan",
+   "i": "b"
+  },
+  "莱昂纳": {
+   "p": "laiangna",
+   "i": "l"
+  },
+  "莱昂纳 动物饲养员": {
+   "p": "laiangna dongwusiyangyuan",
+   "i": "l"
+  },
+  "茨瓦伊": {
+   "p": "ciwayi",
+   "i": "c"
+  },
+  "茨瓦伊 第一次庆典": {
+   "p": "ciwayi diyiciqingdian",
+   "i": "c"
+  },
+  "茨瓦伊 春日漫步": {
+   "p": "ciwayi chunrimanbu",
+   "i": "c"
+  },
+  "爱因": {
+   "p": "aiyin",
+   "i": "a"
+  },
+  "爱因 手作庆典": {
+   "p": "aiyin shouzuoqingdian",
+   "i": "a"
+  },
+  "莱伊": {
+   "p": "laiyi",
+   "i": "l"
+  },
+  "吉尔提": {
+   "p": "jierti",
+   "i": "j"
+  },
+  "吉尔提 多疑浪潮": {
+   "p": "jierti duoyilangchao",
+   "i": "j"
+  },
+  "森": {
+   "p": "sen",
+   "i": "s"
+  },
+  "森 后街的梦想": {
+   "p": "sen houjiedemengxiang",
+   "i": "s"
+  },
+  "坎西": {
+   "p": "kanxi",
+   "i": "k"
+  },
+  "坎西：逃生女王": {
+   "p": "kanxi：taoshengnvwang",
+   "i": "k"
+  },
+  "坎西：逃生女王 变装天鹅": {
+   "p": "kanxi：taoshengnvwang bianzhuangtiane",
+   "i": "k"
+  },
+  "芙罗拉": {
+   "p": "fuluola",
+   "i": "f"
+  },
+  "芙罗拉 妖精兔": {
+   "p": "fuluola yaojingtu",
+   "i": "f"
+  },
+  "特蕾娜": {
+   "p": "teleina",
+   "i": "t"
+  },
+  "特蕾娜 纯粹洁白": {
+   "p": "teleina chuncuijiebai",
+   "i": "t"
+  },
+  "诺伊斯": {
+   "p": "nuoyisi",
+   "i": "n"
+  },
+  "诺伊斯 樱花舞台": {
+   "p": "nuoyisi yinghuawutai",
+   "i": "n"
+  },
+  "诺伊斯 经典天后": {
+   "p": "nuoyisi jingdiantianhou",
+   "i": "n"
+  },
+  "沃纶姆": {
+   "p": "wolunmu",
+   "i": "w"
+  },
+  "沃纶姆 抢跑": {
+   "p": "wolunmu qiangpao",
+   "i": "w"
+  },
+  "阿莉亚": {
+   "p": "aliya",
+   "i": "a"
+  },
+  "爱莉": {
+   "p": "aili",
+   "i": "a"
+  },
+  "阿维斯塔": {
+   "p": "aweisita",
+   "i": "a"
+  },
+  "娜嘉": {
+   "p": "najia",
+   "i": "n"
+  },
+  "娜嘉 优雅约会": {
+   "p": "najia youyayuehui",
+   "i": "n"
+  },
+  "娜嘉 最后的少女时代": {
+   "p": "najia zuihoudeshaonvshidai",
+   "i": "n"
+  },
+  "娜嘉 金环恋曲": {
+   "p": "najia jinhuanlianqu",
+   "i": "n"
+  },
+  "蒂亚": {
+   "p": "diya",
+   "i": "d"
+  },
+  "蒂亚 美妙约会": {
+   "p": "diya meimiaoyuehui",
+   "i": "d"
+  },
+  "蒂亚 甜美主厨": {
+   "p": "diya tianmeizhuchu",
+   "i": "d"
+  },
+  "蒂亚 海岸甜心": {
+   "p": "diya haiantianxin",
+   "i": "d"
+  },
+  "小红帽": {
+   "p": "xiaohongmao",
+   "i": "x"
+  },
+  "小红帽 荒诞红": {
+   "p": "xiaohongmao huangdanhong",
+   "i": "x"
+  },
+  "小红帽 怀旧时光": {
+   "p": "xiaohongmao huaijiushiguang",
+   "i": "x"
+  },
+  "白雪公主：重型武装": {
+   "p": "baixuegongzhu：zhongxingwuzhuang",
+   "i": "b"
+  },
+  "长发公主：纯洁修女": {
+   "p": "changfagongzhu：chunjiexiunv",
+   "i": "c"
+  },
+  "利弗林": {
+   "p": "lifulin",
+   "i": "l"
+  },
+  "芙拉吉尔": {
+   "p": "fulajier",
+   "i": "f"
+  },
+  "罗吉 (#000000)": {
+   "p": "luoji (#000000)",
+   "i": "l"
+  },
+  "哈梅林": {
+   "p": "hameilin",
+   "i": "h"
+  },
+  "德里尔林": {
+   "p": "delierlin",
+   "i": "d"
+  },
+  "伊莱格": {
+   "p": "yilaige",
+   "i": "y"
+  },
+  "特罗尼": {
+   "p": "teluoni",
+   "i": "t"
+  },
+  "特罗尼 甜蜜舞步": {
+   "p": "teluoni tianmiwubu",
+   "i": "t"
+  },
+  "伊莱格：BOOM与惊吓": {
+   "p": "yilaige：boomyujingxia",
+   "i": "y"
+  },
+  "格拉维": {
+   "p": "gelawei",
+   "i": "g"
+  },
+  "灰姑娘": {
+   "p": "huiguniang",
+   "i": "h"
+  },
+  "灰姑娘 水晶公主": {
+   "p": "huiguniang shuijinggongzhu",
+   "i": "h"
+  },
+  "灰姑娘 美丽的我": {
+   "p": "huiguniang meilidewo",
+   "i": "h"
+  },
+  "小美人鱼": {
+   "p": "xiaomeirenyu",
+   "i": "x"
+  },
+  "小美人鱼 深渊之花": {
+   "p": "xiaomeirenyu shenyuanzhihua",
+   "i": "x"
+  },
+  "小美人鱼 绚丽泡泡": {
+   "p": "xiaomeirenyu xuanlipaopao",
+   "i": "x"
+  },
+  "小美人鱼 珍珠贝公主": {
+   "p": "xiaomeirenyu zhenzhubeigongzhu",
+   "i": "x"
+  },
+  "灰姑娘：琉璃波光": {
+   "p": "huiguniang：liuliboguang",
+   "i": "h"
+  },
+  "格拉维 美丽的你": {
+   "p": "gelawei meilideni",
+   "i": "g"
+  },
+  "布蕾德": {
+   "p": "buleide",
+   "i": "b"
+  },
+  "布蕾德 糖霜咬咬": {
+   "p": "buleide tangshuangyaoyao",
+   "i": "b"
+  },
+  "克劳斯特": {
+   "p": "kelaosite",
+   "i": "k"
+  },
+  "思凯": {
+   "p": "sikai",
+   "i": "s"
+  },
+  "西埃洛": {
+   "p": "xiailuo",
+   "i": "x"
+  },
+  "索拉": {
+   "p": "suola",
+   "i": "s"
+  },
+  "索拉 春日飞行": {
+   "p": "suola chunrifeixing",
+   "i": "s"
+  },
+  "贝伊": {
+   "p": "beiyi",
+   "i": "b"
+  },
+  "贝伊 闪耀兔": {
+   "p": "beiyi shanyaotu",
+   "i": "b"
+  },
+  "克雷伊": {
+   "p": "keleiyi",
+   "i": "k"
+  },
+  "克雷伊 啦啦队训练服": {
+   "p": "keleiyi laladuixunlianfu",
+   "i": "k"
+  },
+  "贝西摩斯": {
+   "p": "beiximosi",
+   "i": "b"
+  },
+  "席兹": {
+   "p": "xizi",
+   "i": "x"
+  },
+  "利维坦": {
+   "p": "liweitan",
+   "i": "l"
+  },
+  "巴哈姆特": {
+   "p": "bahamute",
+   "i": "b"
+  },
+  "方舟黑色游侠": {
+   "p": "fangzhouheiseyouxia",
+   "i": "f"
+  },
+  "Ark Ranger Black": {
+   "p": "arkrangerblack",
+   "i": "a"
+  },
+  "方舟红色游侠": {
+   "p": "fangzhouhongseyouxia",
+   "i": "f"
+  },
+  "方舟蓝色游侠": {
+   "p": "fangzhoulanseyouxia",
+   "i": "f"
+  },
+  "潘托姆": {
+   "p": "pantuomu",
+   "i": "p"
+  },
+  "潘托姆 圣洁怪盗": {
+   "p": "pantuomu shengjieguaidao",
+   "i": "p"
+  },
+  "阿尔卡娜": {
+   "p": "aerkana",
+   "i": "a"
+  },
+  "蕾贝儿": {
+   "p": "leibeier",
+   "i": "l"
+  },
+  "阿尔卡娜：命运伴侣": {
+   "p": "aerkana：mingyunbanlv",
+   "i": "a"
+  },
+  "莫莉": {
+   "p": "moli",
+   "i": "m"
+  },
+  "敏特": {
+   "p": "minte",
+   "i": "m"
+  },
+  "敏特 清新薄荷": {
+   "p": "minte qingxinbohe",
+   "i": "m"
+  },
+  "Mint": {
+   "p": "mint",
+   "i": "m"
+  },
+  "普莉卡": {
+   "p": "pulika",
+   "i": "p"
+  },
+  "普莉卡 酷冷辣椒": {
+   "p": "pulika kulenglajiao",
+   "i": "p"
+  },
+  "Prika": {
+   "p": "prika",
+   "i": "p"
+  },
+  "机甲神谢芙蒂": {
+   "p": "jijiashenxiefudi",
+   "i": "j"
+  },
+  "白鹤": {
+   "p": "baihe",
+   "i": "b"
+  },
+  "玛奇玛": {
+   "p": "maqima",
+   "i": "m"
+  },
+  "玛奇玛 脱下外套": {
+   "p": "maqima tuoxiawaitao",
+   "i": "m"
+  },
+  "帕瓦": {
+   "p": "pawa",
+   "i": "p"
+  },
+  "姬野": {
+   "p": "jiye",
+   "i": "j"
+  },
+  "电次": {
+   "p": "dianci",
+   "i": "d"
+  },
+  "Denji Chainsaw Man": {
+   "p": "denjichainsawman",
+   "i": "d"
+  },
+  "早川秋": {
+   "p": "zaochuanqiu",
+   "i": "z"
+  },
+  "2B": {
+   "p": "2b",
+   "i": "2"
+  },
+  "2B 战损状态": {
+   "p": "2b zhansunzhuangtai",
+   "i": "2"
+  },
+  "2B 寄叶制服1": {
+   "p": "2b jiyezhifu1",
+   "i": "2"
+  },
+  "2B 寄叶非官方水上活动服1": {
+   "p": "2b jiyefeiguanfangshuishanghuodongfu1",
+   "i": "2"
+  },
+  "A2": {
+   "p": "a2",
+   "i": "a"
+  },
+  "A2 战损状态": {
+   "p": "a2 zhansunzhuangtai",
+   "i": "a"
+  },
+  "A2 寄叶制服原型": {
+   "p": "a2 jiyezhifuyuanxing",
+   "i": "a"
+  },
+  "A2 寄叶非官方水上活动服原型": {
+   "p": "a2 jiyefeiguanfangshuishanghuodongfuyuanxing",
+   "i": "a"
+  },
+  "帕斯卡": {
+   "p": "pasika",
+   "i": "p"
+  },
+  "9S": {
+   "p": "9s",
+   "i": "9"
+  },
+  "雷姆": {
+   "p": "leimu",
+   "i": "l"
+  },
+  "雷姆 俐落女仆": {
+   "p": "leimu liluonvpu",
+   "i": "l"
+  },
+  "雷姆 纯净之花": {
+   "p": "leimu chunjingzhihua",
+   "i": "l"
+  },
+  "爱蜜莉雅": {
+   "p": "aimiliya",
+   "i": "a"
+  },
+  "爱蜜莉雅 生涩女仆": {
+   "p": "aimiliya shengsenvpu",
+   "i": "a"
+  },
+  "爱蜜莉雅 春日微风": {
+   "p": "aimiliya chunriweifeng",
+   "i": "a"
+  },
+  "拉姆": {
+   "p": "lamu",
+   "i": "l"
+  },
+  "明日香": {
+   "p": "mingrixiang",
+   "i": "m"
+  },
+  "明日香 明日香的校服": {
+   "p": "mingrixiang mingrixiangdexiaofu",
+   "i": "m"
+  },
+  "明日香 自私街": {
+   "p": "mingrixiang zisijie",
+   "i": "m"
+  },
+  "明日香 测试用作战服": {
+   "p": "mingrixiang ceshiyongzuozhanfu",
+   "i": "m"
+  },
+  "零": {
+   "p": "ling",
+   "i": "l"
+  },
+  "零 零的校服": {
+   "p": "ling lingdexiaofu",
+   "i": "l"
+  },
+  "零 宁静渡假": {
+   "p": "ling ningjingdujia",
+   "i": "l"
+  },
+  "真理": {
+   "p": "zhenli",
+   "i": "z"
+  },
+  "真理 真理的校服": {
+   "p": "zhenli zhenlidexiaofu",
+   "i": "z"
+  },
+  "真理 休闲之旅": {
+   "p": "zhenli xiuxianzhilv",
+   "i": "z"
+  },
+  "真理 最终决战：真理": {
+   "p": "zhenli zuizhongjuezhan：zhenli",
+   "i": "z"
+  },
+  "真理 神秘缪斯": {
+   "p": "zhenli shenmimousi",
+   "i": "z"
+  },
+  "美里": {
+   "p": "meili",
+   "i": "m"
+  },
+  "零（暂称）": {
+   "p": "ling（zancheng）",
+   "i": "l"
+  },
+  "零（暂称） 第三村的长得像小姐": {
+   "p": "ling（zancheng） disancundezhangdexiangxiaojie",
+   "i": "l"
+  },
+  "零（暂称） 灵魂连接": {
+   "p": "ling（zancheng） linghunlianjie",
+   "i": "l"
+  },
+  "明日香：WILLE": {
+   "p": "mingrixiang：wille",
+   "i": "m"
+  },
+  "明日香：WILLE 最终决战：明日香": {
+   "p": "mingrixiang：wille zuizhongjuezhan：mingrixiang",
+   "i": "m"
+  },
+  "明日香：WILLE 孤海乐章": {
+   "p": "mingrixiang：wille guhaiyuezhang",
+   "i": "m"
+  },
+  "樱": {
+   "p": "ying",
+   "i": "y"
+  },
+  "艾达": {
+   "p": "aida",
+   "i": "a"
+  },
+  "艾达 SEPARATE WAYS": {
+   "p": "aida separate ways",
+   "i": "a"
+  },
+  "艾达 DRESS": {
+   "p": "aida dress",
+   "i": "a"
+  },
+  "吉儿": {
+   "p": "jier",
+   "i": "j"
+  },
+  "吉儿 CLASSIC": {
+   "p": "jier classic",
+   "i": "j"
+  },
+  "吉儿 BATTLE SUIT": {
+   "p": "jier battle suit",
+   "i": "j"
+  },
+  "克莱尔": {
+   "p": "kelaier",
+   "i": "k"
+  },
+  "伊芙": {
+   "p": "yifu",
+   "i": "y"
+  },
+  "伊芙 镂空裙装": {
+   "p": "yifu loukongqunzhuang",
+   "i": "y"
+  },
+  "伊芙 神经元链接套装": {
+   "p": "yifu shenjingyuanlianjietaozhuang",
+   "i": "y"
+  },
+  "伊芙 活肤紧身服": {
+   "p": "yifu huofujinshenfu",
+   "i": "y"
+  },
+  "渡鸦": {
+   "p": "duya",
+   "i": "d"
+  },
+  "渡鸦 星球空降服（第6小队）第2版": {
+   "p": "duya xingqiukongjiangfu（di6xiaodui）di2ban",
+   "i": "d"
+  },
+  "渡鸦 盛夏爱丽丝": {
+   "p": "duya shengxiaailisi",
+   "i": "d"
+  },
+  "百合": {
+   "p": "baihe",
+   "i": "b"
+  },
+  "亚当": {
+   "p": "yadang",
+   "i": "y"
+  },
+  "千束": {
+   "p": "qianshu",
+   "i": "q"
+  },
+  "千束 DA训练服（第一套）": {
+   "p": "qianshu daxunlianfu（diyitao）",
+   "i": "q"
+  },
+  "千束 赤红火花吉他": {
+   "p": "qianshu chihonghuohuajita",
+   "i": "q"
+  },
+  "泷奈": {
+   "p": "longnai",
+   "i": "l"
+  },
+  "泷奈 DA训练服（第二套）": {
+   "p": "longnai daxunlianfu（diertao）",
+   "i": "l"
+  },
+  "泷奈 湛蓝律动贝斯": {
+   "p": "longnai zhanlanlvdongbeisi",
+   "i": "l"
+  },
+  "胡桃": {
+   "p": "hutao",
+   "i": "h"
+  },
+  "QUEEN（真）": {
+   "p": "queen（zhen）",
+   "i": "q"
+  },
+  "QUEEN（真） 秀尽学园学生会长": {
+   "p": "queen（zhen） xiujinxueyuanxueshenghuizhang",
+   "i": "q"
+  },
+  "QUEEN（真） 女王睡衣（Ver. NIKKE Collabo）": {
+   "p": "queen（zhen） nvwangshuiyi（ver. nikke collabo）",
+   "i": "q"
+  },
+  "雪子": {
+   "p": "xuezi",
+   "i": "x"
+  },
+  "雪子 天城屋旅馆和服": {
+   "p": "xuezi tianchengwulvguanhefu",
+   "i": "x"
+  },
+  "雪子 冬日雅居（Ver. NIKKE Collabo）": {
+   "p": "xuezi dongriyaju（ver. nikke collabo）",
+   "i": "x"
+  },
+  "埃癸斯": {
+   "p": "aiguisi",
+   "i": "a"
+  },
+  "Ying Ning (婴宁) (CN)": {
+   "p": "ying ning (yingning) (cn)",
+   "i": "y"
+  },
+  "Hua Pi (画皮) (CN)": {
+   "p": "hua pi (huapi) (cn)",
+   "i": "h"
+  }
+ }
+}

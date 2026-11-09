@@ -45,7 +45,6 @@ hiddenimports = (
         "plugins.sources.nikke_db",
         "plugins.sources.local",
         "plugins.exporters.wallpaper_spine",
-        "plugins.exporters.wallpaper_static",
         "requests",
         "PIL",
     ]

@@ -166,6 +166,100 @@ function playAnim(name) {
   });
 }
 
+// 角色点击互动状态机（首击 action -> 随机表情池 -> 播完重置为 action 循环）
+var ENABLE_INTERACTION = {{ENABLE_INTERACTION}};
+var _interactStep = "action";
+var _playedExpressions = {};
+var _interactBusy = false;
+
+function getAvailableExpressions(l) {
+  if (!l || !l.data || !l.data.animations) return [];
+  var allAnims = l.data.animations.map(function (a) { return a.name; });
+  var targetKeywords = [
+    "shy", "happy", "delight", "sad", "good", "no", "smile", "angry", "cry",
+    "surprise", "surpris", "shock", "fear", "confus", "think", "laugh", "cheer", "wink", "proud", "panic"
+  ];
+
+  return allAnims.filter(function (name) {
+    var low = name.toLowerCase();
+    // 1. 严格排除 talk 系列（不单放张嘴动作）
+    if (low.indexOf("talk") !== -1) return false;
+    // 2. 严格排除 bg_ / 背景系列（如 bg_idle 等）
+    if (low.indexOf("bg_") !== -1 || low.indexOf("bg") === 0 || low.indexOf("b_bg") !== -1 || low.indexOf("bk") !== -1) return false;
+    // 3. 排除基础姿势与待机动作
+    if (low === "idle" || low.indexOf("idle_") === 0 || low === "action" || low === "aim" || low === "cover") return false;
+    // 4. 排除局部面部器官微调轨（避免只抽动鼻子/眨眼/眼珠/眼睫毛的非全身局部轨）
+    if (low.indexOf("eye") !== -1 || low.indexOf("lash") !== -1 || low.indexOf("brow") !== -1 || low.indexOf("lip") !== -1 || low.indexOf("mouth") !== -1 || low.indexOf("tear") !== -1 || low.indexOf("blush") !== -1 || low.indexOf("nose") !== -1 || low.indexOf("ball") !== -1 || low.indexOf("ddam") !== -1 || low.indexOf("cheek") !== -1 || low.indexOf("_acc") !== -1) return false;
+    // 5. 匹配表情核心词
+    return targetKeywords.some(function (kw) {
+      return low === kw || low.indexOf(kw) === 0 || (low.length >= kw.length && low.lastIndexOf(kw) === low.length - kw.length);
+    });
+  });
+}
+
+function triggerInteraction() {
+  if (!ENABLE_INTERACTION || !skeletons.length || _interactBusy) return;
+  var l0 = skeletons[0];
+  var allAnimNames = l0.data.animations.map(function (a) { return a.name; });
+  var idleAnim = pickAnim(l0.data);
+  var actionAnim = allAnimNames.find(function (n) { return n.toLowerCase() === "action"; }) || allAnimNames.find(function (n) { return n.toLowerCase().indexOf("action") !== -1; });
+  var expressions = getAvailableExpressions(l0);
+
+  var targetAnim = "";
+  var isAction = false;
+
+  if (_interactStep === "action" || expressions.length === 0) {
+    targetAnim = actionAnim || (expressions[0] || idleAnim);
+    isAction = true;
+    _interactStep = "expressions";
+    _playedExpressions = {};
+  } else {
+    var remaining = expressions.filter(function (e) { return !_playedExpressions[e]; });
+    if (remaining.length > 0) {
+      var idx = Math.floor(Math.random() * remaining.length);
+      targetAnim = remaining[idx];
+      _playedExpressions[targetAnim] = true;
+
+      var playedCount = Object.keys(_playedExpressions).length;
+      if (playedCount >= expressions.length) {
+        _interactStep = "action";
+        _playedExpressions = {};
+      }
+    } else {
+      targetAnim = actionAnim || idleAnim;
+      isAction = true;
+      _interactStep = "action";
+      _playedExpressions = {};
+    }
+  }
+
+  if (!targetAnim) return;
+
+  _interactBusy = true;
+  if (isAction) {
+    // action 动作为一次性播放，播放完成后自动回切 idle 待机
+    skeletons.forEach(function (l) {
+      if (!l.skeleton) return;
+      l.state.setAnimation(0, targetAnim, false);
+      l.state.addAnimation(0, idleAnim, true, 0);
+    });
+    var animObj = l0.data.animations.find(function (a) { return a.name === targetAnim; });
+    var duration = (animObj ? animObj.duration : 2.0) * 1000;
+    setTimeout(function () {
+      _interactBusy = false;
+    }, Math.max(800, duration));
+  } else {
+    // 表情动作为持久播放（loop: true），一直保持直到下一次点击切换
+    skeletons.forEach(function (l) {
+      if (!l.skeleton) return;
+      l.state.setAnimation(0, targetAnim, true);
+    });
+    setTimeout(function () {
+      _interactBusy = false;
+    }, 300);
+  }
+}
+
 function isBgLayer(l) {
   // 多骨架分层兼容（NIKKE 单骨架时自动空转）
   if (!l || !l.skeleton || !l.name) return false;
@@ -459,6 +553,18 @@ window.wallpaperPropertyListener = {
       if (properties.scalectrl) SCALE = properties.scalectrl.value;
       if (properties.offsetx) OFFSET_X = properties.offsetx.value;
       if (properties.offsety) OFFSET_Y = properties.offsety.value;
+      if (properties.interaction !== undefined) {
+        ENABLE_INTERACTION = Boolean(properties.interaction.value);
+        if (!ENABLE_INTERACTION && skeletons.length) {
+          var idleAnim = pickAnim(skeletons[0].data);
+          skeletons.forEach(function (l) {
+            if (l.skeleton) l.state.setAnimation(0, idleAnim, true);
+          });
+          _interactStep = "action";
+          _playedExpressions = {};
+          _interactBusy = false;
+        }
+      }
       if (properties.alignment) {
         var av = properties.alignment.value;
         if (typeof av === "number") ALIGNMENT = WallpaperLayout.ALIGN_ORDER[av] || ALIGNMENT;
@@ -479,6 +585,19 @@ function init() {
   if (!gl) { showError("WebGL not supported"); return; }
   renderer = new spine.SceneRenderer(canvas, gl, false);
   for (var i = 0; i < LAYERS.length; i++) loadLayer(i);
+
+  var _downX = 0, _downY = 0;
+  canvas.addEventListener("mousedown", function(e) {
+    if (e.button !== 0) return;
+    _downX = e.clientX; _downY = e.clientY;
+  });
+  canvas.addEventListener("mouseup", function(e) {
+    if (e.button !== 0) return;
+    var dist = Math.hypot(e.clientX - _downX, e.clientY - _downY);
+    if (dist < 6) {
+      triggerInteraction();
+    }
+  });
 }
 window.addEventListener("resize", function () {
   canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;

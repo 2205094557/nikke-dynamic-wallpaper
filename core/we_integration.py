@@ -55,7 +55,7 @@ def _ascii_copy_name(project_name: str) -> str:
     """WE 的 openWallpaper IPC 会把中文路径以乱码写进 config.json（selectedwallpapers），
     重启后壁纸将无法加载。副本目录名只保留 ASCII 字符，标题仍由 project.json 提供。"""
     ascii_part = re.sub(r"[^A-Za-z0-9_-]", "", project_name)[:32].strip("_-")
-    return f"{ascii_part or 'nk2d'}_{uuid.uuid4().hex[:8]}"
+    return f"{ascii_part or 'Nikke'}_{uuid.uuid4().hex[:8]}"
 
 
 # 一键应用副本的标记文件：内容记录本次壁纸的唯一标识（{ship}_{name} 去 _uuid8 前缀，

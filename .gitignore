@@ -1,8 +1,32 @@
 .venv/
 __pycache__/
 *.pyc
+
+# 资源目录：忽略所有大体积解包数据与动态缓存
 resources/*
 !resources/icon.ico
+!resources/metadata/
+!resources/metadata/**
+resources/metadata/local_skins.json
+resources/metadata/l2d_folders.json
+resources/config.json
+resources/library.db
+
+# 排除用户场景与动态导出
+resources/extracted/
+resources/background/
+resources/custom/
+resources/output/
+resources/input/
+resources/preview/
+resources/wallpapers/
+resources/exports/
+resources/thumbnails/
+
+# 头像数据随仓库发布（免二次拉取）
+!resources/avatars/
+!resources/avatars/*
+
 logs/
 dist/
 build/

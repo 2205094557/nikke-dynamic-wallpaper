@@ -9,7 +9,7 @@
 
 `backend_server.py`（stdlib HTTP 后端，8766 开发 / 8770 打包）+ `plugins/sources/nikke_db.py`
 （nikke-db Cloudflare Pages 静态站下载，无解包环节）+ `core/*`（registry/metadata/library/
-palette/wallpaper/we_integration）+ `plugins/exporters/`（动态/静态壁纸导出）+ Vue3 前端。
+palette/wallpaper/we_integration）+ `plugins/exporters/wallpaper_spine.py`（动态壁纸导出）+ Vue3 前端。
 
 ## 资源模型（nikke-db 静态站）
 
@@ -48,18 +48,72 @@ palette/wallpaper/we_integration）+ `plugins/exporters/`（动态/静态壁纸�
   NIKKE_PREMULTIPLY_UPLOAD` 恒为 false（BD2 是直通 alpha 为 true，别照搬旧值）
 - 验证：浅色背景下角色不发白/不发黑；半透明纱裙无灰边
 
+## 自定义背景 / 扩图合成工作流（关键）
+
+用户可导入自己的背景（含外部扩图成果），与人物合成后导出 WE 壁纸。目录分工：
+
+| 目录 | 作用 | 生命周期 |
+|---|---|---|
+| `resources/background/` | 官方解包场景图（339 png + 1 readme） | 只读素材 |
+| `resources/output/` | **导出目录**：`导出扩图` 把当前背景复制进来（待扩图） | 中转，可自行清理 |
+| `resources/input/` | **导入目录**：用户把扩图成品放这里，`导入扩图` **只扫这个文件夹** | 中转，可自行清理 |
+| `resources/custom/` | 自定义背景库：`导入扩图` 的成果落盘于此 | 持久，参与预览/超分/导出 |
+| `resources/preview/` | 超分产物临时缓存（`_preview.png`） | 退出即清理，母图持久可重跑 |
+
+- 流程：导出到 output → 外部工具扩图 → 成品放进 input → 点「导入扩图」。**导出不自动弹文件夹**
+  （早期版本每次导出都 `openOutpaintDir`，用户明确要求去掉）；弹文件夹只由「📁 output / 📁 input」
+  两个按钮触发
+- **路径解析统一走 `core/backgrounds.py::resolve_background_file()`**：custom → background → output
+  → preview（input 只是导入暂存区，不参与解析）。超分与动态/静态导出器全部用它，别再各自拼
+  `resources/xxx`（早期导出器只查 background+preview，扩图背景导出会丢图）
+- `background_dirs(root)` 返回 **`BackgroundDirs` NamedTuple**（official/custom/output/input/preview），
+  一律**按字段名访问**。历史教训：曾是裸元组，3/4 元组按位置解包错位过一次（outpaint 被当成
+  preview，超分产物永远解析不到）——不要再改回位置解包
+- **自定义优先 = 同名遮罩**：导入与官方同名的图会覆盖官方（列表去重只留 custom 那条，卡片带"自定义"
+  角标）。还原官方：卡片右上 ✕ 二次确认删除，或删 `resources/custom/` 下文件
+- **缩略图**：自定义背景用独立后缀 `thumbnails/background/<stem>__custom.webp`，与官方同名图互不覆盖；
+  `get_available_backgrounds` 对缺失缩略图懒生成（官方/自定义都自愈）
+- **导入按内容 sha1 比对**：已导入的跳过（幂等）；与同名官方内容一致的（"把没扩图的原始导出误丢进
+  input"）记为 `unchanged` 跳过，避免凭空多出一层遮罩
+- **非 png 自动转 png**：超分引擎只吃 png，jpg/webp/bmp 导入时转存 png（先写 preview 临时文件再比对
+  替换，保证重复导入不重写）
+- 接口：`GET /api/backgrounds`（含 `categories` 的 custom 分类、`customCount`、`outputDir`、`inputDir`）、
+  `POST /api/backgrounds/{export-outpaint,import-outpaint,delete-custom,upscale}`、
+  `POST /api/open/{output-dir,input-dir,custom-dir,background-dir}`。前端入口在 GalleryView
+  「外观 → 扩图合成」条（导出扩图 / 导入扩图 / 📁 output / 📁 input）与背景选择弹窗工具栏
+- **`resources/outpaint/` 是历史目录名**，已拆成 output（导出）+ input（导入）。若在老版本升级后看到它，
+  按内容判定归位：与同名官方背景逐字节一致 → output/，否则 → input/（它里面的成品图通常已在 custom/，
+  迁到 input/ 后再导入会被识别为"已导入过"而跳过，不会重复）
+- **超分产物校验不能用固定字节数阈值**：`core/upscaler.py::output_is_valid()` 按
+  「存在 + 非空 + 可解码」判定。小尺寸背景正常输出可能只有几十 KB，用 `>100000` 会被误判为失败
+- 端到端验收已并入 `tools/verify_nikke.py` 第 4 段（导出→模拟扩图→成品进 input→导入→超分→合成导出
+  →删除），并含"output 里的图不会被导入"的反证；该脚本结束时只删本次产生的文件，不污染用户已有导出；
+  `--clean` 额外删除验收下载的测试角色
+
 ## 打包铁律（继承 + 本项目要点）
 
 1. 前端 API 地址永不硬编码：`frontend/src/bridge/index.js` 走
-   `import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8766'`；打包必须
-   `vite build --mode packaged`（.env.packaged → 8770），`build_pack.py` 校验产物无 8766
-2. 端口：开发 8766 + Vite 5173；打包 8770 + 静态 5174；`app_pack.py` 启动自己的后端
-3. frozen 不能起子进程：tools/* 一律 `run_tool()` 进程内加载（backend_server.py）
-4. 静态服务器 `unquote` URL + 目录穿越防护（app_pack.py Handler）
-5. spec：`nikke.spec`（name nikke-dynamic-wallpaper；hiddenimports 含 plugins.sources.nikke_db，
-   无 UnityPy/voice/extractors）；产物自检见 build_pack.py required 字典
-6. 发布前必跑：`python tools/verify_nikke.py --clean`（起独立后端 8799 → 下载 4.0/4.1 各一角色
-   → 校验提取产物与版本 → 导出动态/静态壁纸 → 检查 project.json/运行时版本 → 清测试数据）
+   `import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8766'`；打包走
+   `python scripts/build_pack.py`（强制 `vite build --mode packaged` → .env.packaged 8770
+   → 校验产物无 8766 → PyInstaller → 产物自检，一步到位）。**裸 `npm run build` 会把 8766
+   打进 `frontend/dist`，桌面版就会连开发后端**；临时自检可用
+   `grep -ro "127.0.0.1:87[0-9][0-9]" frontend/dist/`（只应出现 8770）
+2. **启动方式**：仓库只有一个源码版启动器 `start.bat`（→ `scripts/start_dev.py`：后端 8766 +
+   Vite 5173 + 桌面窗口）。该 .bat 必须存为 **UTF-8 无 BOM + CRLF**，且首行 `chcp 65001`——
+   GBK 正文配 65001（或 LF 换行）会让 cmd 按 UTF-8 读 GBK 字节，报
+   `'器' 不是内部或外部命令` 之类的错并启动失败（已踩坑，两个旧 .bat 都栽在这）
+3. 端口：开发 8766 + Vite 5173；打包 8770 + 静态 5174；`app_pack.py` 启动自己的后端
+4. frozen 不能起子进程：tools/* 一律 `run_tool()` 进程内加载（backend_server.py）
+5. 静态服务器 `unquote` URL + 目录穿越防护（app_pack.py Handler）
+6. spec：`nikke.spec`（name nikke-dynamic-wallpaper；hiddenimports 含 plugins.sources.nikke_db，
+   无 UnityPy/voice/extractors、无静态壁纸导出器）；产物自检见 scripts/build_pack.py
+7. 发布前必跑：`python tools/verify_nikke.py --clean`（起独立后端 8799 → 下载 4.0/4.1 各一角色
+   → 校验提取产物与版本 → 导出动态壁纸并检查 project.json/运行时版本 → 扩图工作流全链路
+   → 清理本次产物；`--clean` 额外删除验收下载的角色）
+8. **两个前端源的 localStorage 不互通**：开发窗口加载 5173、打包窗口加载 5174，收藏等
+   localStorage 按 host:port 隔离 → 换启动方式会"看不到收藏"（数据没丢，只是另一个源）。
+   排查/恢复见 `%APPDATA%\nikke-dynamic-wallpaper\webview\EBWebView\Default\Local Storage\leveldb`
+   （键 `nk_wallpaper_skin_favs`，值为 UTF-16LE 的 `ship|bundle|name` 数组）
 
 ## WE 集成（we_integration.py）
 
@@ -89,5 +143,10 @@ palette/wallpaper/we_integration）+ `plugins/exporters/`（动态/静态壁纸�
 | 贴图 404 / texture load failed | atlas 页面名带 BOM 未剥，或姿势子目录前缀漏拼 |
 | 下载器把 HTML 错误页当资源 | 缺失文件返回 200，需按内容魔数校验 |
 | 角色名串组 | 同名 ship 未加 id 后缀（重建元数据） |
-| 打包版连上开发后端 | 前端构建没用 --mode packaged（产物含 8766） |
+| 双击 .bat 报 `'器' 不是内部或外部命令` 后秒退 | .bat 是 GBK 正文 + `chcp 65001`（或 LF 换行），须 UTF-8 无 BOM + CRLF |
+| 换个启动方式后收藏/设置全没了 | localStorage 按端口隔离（5173 ≠ 5174），数据没丢，见打包铁律 8 |
+| 打包版连上开发后端 | 前端构建没用 `--mode packaged`（产物含 8766） |
+| 导入的扩图背景超分/导出报"母图不存在" | 解析漏了 custom/output（统一用 resolve_background_file） |
+| 超分小图报"输出异常" | 用了固定字节数阈值，改用 `output_is_valid()` |
+| 自定义背景显示的还是官方缩略图 | 缩略图未用 `__custom` 后缀，与官方同名图互相覆盖 |
 | 重启 WE 后壁纸消失 | 应用副本目录名含中文（必须 ASCII + marker 身份） |

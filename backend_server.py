@@ -14,13 +14,24 @@ import shutil
 import subprocess
 import sys
 import threading
+import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
+from core.backgrounds import (  # noqa: E402
+    CATEGORIES,
+    background_dirs,
+    delete_custom_background,
+    export_background_for_outpaint,
+    get_available_backgrounds,
+    get_recommendations_for_ship,
+    import_outpaint_results,
+)
 from core.config import Config  # noqa: E402
+from core.upscaler import ALGORITHMS as UPSCALE_ALGORITHMS, upscale_background_image  # noqa: E402
 from core.library import Library  # noqa: E402
 from core.locks import named_lock  # noqa: E402
 from core.metadata import Metadata  # noqa: E402
@@ -118,12 +129,15 @@ def get_config() -> dict:
 
 
 def set_config(patch: dict) -> dict:
-    """更新配置并立即生效（代理等）。"""
+    """更新配置并立即保存生效（代理、Gemini API Key、模型等）。"""
     patch = patch or {}
-    if "proxy" in patch:
-        proxy = (patch.get("proxy") or "").strip()
-        config.set("proxy", proxy)
-        src.proxy = proxy or None
+    for k, v in patch.items():
+        if k == "proxy":
+            proxy = (v or "").strip()
+            config.set("proxy", proxy)
+            src.proxy = proxy or None
+        else:
+            config.set(k, v)
     return {"ok": True, "config": config.data}
 
 
@@ -341,25 +355,24 @@ def _export_project(ship: str, bundle: str, name: str | None, options: dict) -> 
     if not asset:
         raise ValueError("该皮肤尚未下载，请先下载后再导出")
     stype = skin.get("type", "")
-    if (options or {}).get("staticImage"):
-        # 静态壁纸：前端预览截图已存档，强制走静态导出器（NIKKE 所有皮肤 type 都是 spine）
-        stype = "static"
-    if stype not in ("spine", "static"):
-        raise ValueError(f"皮肤类型 {stype} 不支持导出壁纸")
-    exporter = registry.get(
-        "exporters",
-        {"spine": "wallpaper_spine", "static": "wallpaper_static"}[stype],
-    )
+    # 只保留 Spine 动态壁纸导出（静态壁纸/单张图片导出已移除）
+    if stype != "spine":
+        raise ValueError(f"皮肤类型 {stype} 不支持导出壁纸（当前仅支持 Spine 动态壁纸）")
+    exporter = registry.get("exporters", "wallpaper_spine")
     if exporter is None:
         raise ValueError("导出插件未注册")
     opts = options or {}
+    # 静态壁纸/单张图片导出已移除：老客户端若仍传 staticImage，明确报错而不是悄悄导成动态壁纸
+    if opts.get("staticImage"):
+        raise ValueError("静态壁纸导出已移除，请使用动态壁纸导出")
     try:
         proj = exporter.export(
             {**skin, "asset": asset},
             {
                 "root": str(ROOT),
-                "bg": opts.get("bg", "monet"),
+                "bg": opts.get("bg", "image" if opts.get("bgImage") else "monet"),
                 "bgColor": opts.get("bgColor"),
+                "bgImage": opts.get("bgImage"),
                 "scale": int(opts.get("scale", 100) or 100),
                 "bgScale": int(opts.get("bgScale", 100) or 100),
                 "offsetX": int(opts.get("offsetX", 0) or 0),
@@ -372,10 +385,9 @@ def _export_project(ship: str, bundle: str, name: str | None, options: dict) -> 
                 "alignment": ALIGN_MAP.get(str(opts.get("alignment", "center")), 0),
                 "animation": opts.get("animation", ""),
                 "animations": opts.get("animations") or [],
+                "interaction": bool(opts.get("interaction", True)),
                 # NIKKE：壁纸使用的姿势（main/aim/cover），导出时烘进壁纸项目
                 "pose": opts.get("pose", "main"),
-                # 静态壁纸：前端截图保存后传入的资源相对路径（resources/exports/...）
-                "staticImage": opts.get("staticImage", ""),
             },
             str(ROOT / "resources" / "wallpapers"),
         )
@@ -407,72 +419,6 @@ def export_skin(ship: str, bundle: str, name: str | None, options: dict) -> dict
         "opened": opened,
         "message": "导出完成，已打开项目文件夹，请把 index.html 拖入 Wallpaper Engine",
     }
-
-
-def export_static_image(ship: str, bundle: str, name: str | None = None) -> dict:
-    """把静态立绘原图导出为普通图片到 resources/exports/ 并打开文件夹。"""
-    skin = resolve_skin(ship, bundle, name)
-    if not skin:
-        return {"ok": False, "error": f"皮肤不存在: {ship}/{bundle}"}
-    if skin.get("type") != "static":
-        return {"ok": False, "error": "仅静态立绘支持导出图片"}
-    asset = local_skin_asset(ship, bundle, name)
-    if not asset:
-        return {"ok": False, "error": "该皮肤尚未下载，请先下载"}
-    src = ROOT / "resources" / asset["dir"] / asset.get("image", "painting.png")
-    if not src.exists():
-        return {"ok": False, "error": f"未找到立绘文件: {src}"}
-    out_dir = ROOT / "resources" / "exports"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    name = "".join(ch for ch in f"{ship}_{skin.get('name', '')}" if ch not in '<>:"/\\|?*').rstrip(" .")
-    dest = out_dir / f"{name or 'painting'}.png"
-    shutil.copy2(src, dest)
-    try:
-        os.startfile(str(out_dir))  # noqa: S606
-        opened = True
-    except Exception:  # noqa: BLE001
-        opened = False
-    return {
-        "ok": True,
-        "path": str(dest),
-        "opened": opened,
-        "message": f"图片已导出：{dest.name}",
-    }
-
-
-def export_image_data(
-    ship: str, bundle: str, name: str | None, data_url: str, index: int | None = None
-) -> dict:
-    """把前端截取的当前预览帧（PNG dataURL）保存为图片并打开文件夹。
-
-    index 为动画序号（spine 导出时传入）：文件名用"角色名-序号"（如 企业-3.png），
-    便于按动画归档截图；不传时保持"角色名_皮肤名.png"的旧命名。
-    """
-    import base64
-
-    if not data_url or "," not in data_url:
-        return {"ok": False, "error": "缺少图像数据"}
-    try:
-        png = base64.b64decode(data_url.split(",", 1)[1])
-    except Exception:  # noqa: BLE001
-        return {"ok": False, "error": "图像数据解析失败"}
-    if not png.startswith(b"\x89PNG"):
-        return {"ok": False, "error": "仅支持 PNG 截图"}
-    out_dir = ROOT / "resources" / "exports"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    if index:
-        safe_ship = "".join(ch for ch in ship if ch not in '<>:"/\\|?*').rstrip(" .")
-        clean = f"{safe_ship or 'ship'}-{int(index)}"
-    else:
-        clean = "".join(ch for ch in f"{ship}_{name or bundle}" if ch not in '<>:"/\\|?*').rstrip(" .")
-    dest = out_dir / f"{clean or 'capture'}.png"
-    dest.write_bytes(png)
-    try:
-        os.startfile(str(out_dir))  # noqa: S606
-        opened = True
-    except Exception:  # noqa: BLE001
-        opened = False
-    return {"ok": True, "path": str(dest), "opened": opened, "message": f"图片已导出：{dest.name}"}
 
 
 def _cleanup_stale_exports(keep: str) -> int:
@@ -711,6 +657,23 @@ class Handler(BaseHTTPRequestHandler):
             if self.path.startswith("/api/health"):            self._send(200, {"ok": True, "plugins": registry.summary()})
             elif self.path.startswith("/api/library/downloaded"):
                 self._send(200, {"ok": True, "skins": downloaded_with_painting()})
+            elif self.path.startswith("/api/backgrounds"):
+                ship = urllib.parse.unquote(self._query("ship", ""))
+                dirs = background_dirs(ROOT)
+                bgs = get_available_backgrounds(dirs.official, dirs.custom)
+                fn_set = {b["filename"] for b in bgs}
+                recs = get_recommendations_for_ship(ship, fn_set) if ship else []
+                self._send(200, {
+                    "ok": True,
+                    "backgrounds": bgs,
+                    "categories": CATEGORIES,
+                    "recommendations": recs,
+                    "upscaleAlgorithms": UPSCALE_ALGORITHMS,
+                    "customCount": sum(1 for b in bgs if b.get("source") == "custom"),
+                    # 扩图工作流目录：output = 导出待扩图，input = 放扩图成品（导入只扫 input）
+                    "outputDir": str(dirs.output),
+                    "inputDir": str(dirs.input),
+                })
             elif self.path.startswith("/api/config"):
                 self._send(200, get_config())
             else:
@@ -777,23 +740,9 @@ class Handler(BaseHTTPRequestHandler):
                 # 前端运行时错误上报（排障用）：打印到 stdout，不落盘
                 print(f"[fe-error] {json.dumps(data, ensure_ascii=False)[:800]}", flush=True)
                 self._send(200, {"ok": True})
-            elif self.path.startswith("/api/export-image-data"):
-                self._send(
-                    200,
-                    export_image_data(
-                        data.get("ship"),
-                        data.get("bundle"),
-                        data.get("name"),
-                        data.get("dataUrl") or "",
-                        index=data.get("index"),
-                    ),
-                )
-            elif self.path.startswith("/api/export-image"):
-                self._send(
-                    200,
-                    export_static_image(data.get("ship"), data.get("bundle"), data.get("name")),
-                )
-            elif self.path.startswith("/api/export"):
+            # 注意：必须排除 /api/export-image*（已移除的图片/静态壁纸导出），
+            # 否则 startswith("/api/export") 会把它们当成普通导出静默处理
+            elif self.path.startswith("/api/export") and not self.path.startswith("/api/export-image"):
                 self._send(
                     200,
                     export_skin(
@@ -836,6 +785,63 @@ class Handler(BaseHTTPRequestHandler):
                             "css": css,
                         },
                     )
+            elif self.path.startswith("/api/backgrounds/export-outpaint"):
+                # 扩图工作流第一步：把当前所选背景（含超分版本）复制到扩图中转目录
+                try:
+                    self._send(
+                        200,
+                        export_background_for_outpaint(ROOT, data.get("filename") or ""),
+                    )
+                except Exception as ex:  # noqa: BLE001
+                    logger.exception("导出扩图背景失败: %s", data.get("filename"))
+                    self._send(200, {"ok": False, "error": str(ex)})
+            elif self.path.startswith("/api/backgrounds/import-outpaint"):
+                # 扩图工作流第三步：把中转目录里的扩图成果导入自定义背景库
+                self._send(200, import_outpaint_results(ROOT))
+            elif self.path.startswith("/api/backgrounds/delete-custom"):
+                self._send(200, delete_custom_background(ROOT, data.get("filename") or ""))
+            elif self.path.startswith("/api/backgrounds/upscale"):
+                filename = data.get("filename") or ""
+                scale = int(data.get("scale") or 2)
+                algo = data.get("algorithm") or "waifu2x"
+                denoise = int(data.get("denoise") or 0)
+                tta = bool(data.get("tta", False))
+                downsample = bool(data.get("downsample", False))
+                try:
+                    res = upscale_background_image(
+                        filename,
+                        scale=scale,
+                        algorithm=algo,
+                        denoise=denoise,
+                        tta=tta,
+                        downsample=downsample,
+                    )
+                    self._send(200, res)
+                except Exception as ex:  # noqa: BLE001
+                    logger.exception("超分背景图片失败: %s", filename)
+                    self._send(200, {"ok": False, "error": str(ex)})
+            elif self.path.startswith("/api/open/output-dir"):
+                # 导出目录：存放待扩图的原始导出
+                dirs = background_dirs(ROOT)
+                dirs.output.mkdir(parents=True, exist_ok=True)
+                os.startfile(str(dirs.output))  # noqa: S606
+                self._send(200, {"ok": True})
+            elif self.path.startswith("/api/open/input-dir"):
+                # 导入目录：用户把扩图成品放这里，导入只扫这个文件夹
+                dirs = background_dirs(ROOT)
+                dirs.input.mkdir(parents=True, exist_ok=True)
+                os.startfile(str(dirs.input))  # noqa: S606
+                self._send(200, {"ok": True})
+            elif self.path.startswith("/api/open/custom-dir"):
+                dirs = background_dirs(ROOT)
+                dirs.custom.mkdir(parents=True, exist_ok=True)
+                os.startfile(str(dirs.custom))  # noqa: S606
+                self._send(200, {"ok": True})
+            elif self.path.startswith("/api/open/background-dir"):
+                bg_dir = ROOT / "resources" / "background"
+                bg_dir.mkdir(parents=True, exist_ok=True)
+                os.startfile(str(bg_dir))  # noqa: S606
+                self._send(200, {"ok": True})
             elif self.path.startswith("/api/open/download-dir"):
                 os.startfile(str(ROOT / "resources" / "extracted"))  # noqa: S606
                 self._send(200, {"ok": True})
